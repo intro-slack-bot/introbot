@@ -196,7 +196,7 @@ class TinySpeck extends EventEmitter {
     // Display the Add to Slack button
     dispatcher.onGet("/", function(req, res) {
       res.writeHead(200, {'Content-Type': 'text/html'});
-      let html = '<h2>Example Onboarding Slack Bot</h2><br /><a id="add-to-slack" href="'+add_to_slack+'"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /><br><br><br><hr><p><a href="https://gomix.com/#!/remix/slack-bot-persist/38ccccbc-8fb1-4ae5-bf06-b8d67b7dfb6a"><img src="https://gomix.com/images/background-light/remix-on-gomix.svg"></a></p><p><a href="https://gomix.com/#!/project/slack-bot-persist">View Code</a></p>';
+      let html = '<h1>Onboarding Slack Bot</h1><p>This project demonstrates how to build a Slack bot using Slack\'s Events API, using MongoDB for persistence.</p><p>To test it out:</p><br /><a id="add-to-slack" href="'+add_to_slack+'"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /><footer id="gWidget"></footer><script src="https://widget.gomix.me/widget.js"></script>';
       res.end(html);
     });     
     

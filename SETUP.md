@@ -3,7 +3,7 @@
 *   A MongoDB, get a free one from [mlab](https://mlab.com/).
 
 ## Step 1: Setting up your Slack App
-To get started [remix this project](https://glitch.com#!/remix/SlackBot/38ccccbc-8fb1-4ae5-bf06-b8d67b7dfb6a) to get your own project with a copy of the code. THen on Slack's site, select '[Create New App](https://api.slack.com/apps)' and fill in the details about your Slack bot. You can edit them later, so put in what you can for now. Under 'Redirect URI(s)' add your project publish URL followed by '/auth/grant' - use your publish URL (click 'Show') which has the format 'https://project-name.glitch.me'. So for our example app, the URL is: 'https://slack-bot-persist.glitch.me/auth/grant'. Finish by selecting 'Create App'.
+To get started [remix this project](https://glitch.com/edit/#!/remix/SlackBot/38ccccbc-8fb1-4ae5-bf06-b8d67b7dfb6a) to get your own project with a copy of the code. THen on Slack's site, select '[Create New App](https://api.slack.com/apps)' and fill in the details about your Slack bot. You can edit them later, so put in what you can for now. Under 'Redirect URI(s)' add your project publish URL followed by '/auth/grant' - use your publish URL (click 'Show') which has the format 'https://project-name.glitch.me'. So for our example app, the URL is: 'https://slack-bot-persist.glitch.me/auth/grant'. Finish by selecting 'Create App'.
 
 ### Add a Slack Bot User
 Select 'Bot Users' and add a name you'll use to interact with your bot in Slack. We used 'onboarding' for our example bot.

@@ -196,7 +196,7 @@ class TinySpeck extends EventEmitter {
     // Display the Add to Slack button
     dispatcher.onGet("/", function(req, res) {
       res.writeHead(200, {'Content-Type': 'text/html'});
-      let html = '<h1>Onboarding Slack Bot</h1><p>This project demonstrates how to build a Slack bot using Slack\'s Events API, using MongoDB for persistence.</p><p>To test it out:</p><br /><a id="add-to-slack" href="'+add_to_slack+'"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /><footer id="gWidget"></footer><script src="https://widget.glitch.me/widget.min.js"></script>';
+      let html = '<h1>Onboarding Slack Bot</h1><p>This project demonstrates how to build a Slack bot using Slack\'s Events API, using MongoDB for persistence.</p><p>To test it out:</p><br /><a id="add-to-slack" href="'+add_to_slack+'"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a><script src="https://button.glitch.me/button.js" data-style="glitch"></script><div class="glitchButton" style="position:fixed;top:20px;right:20px;"></div>';
       res.end(html);
     });     
     

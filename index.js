@@ -29,13 +29,13 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
 //handling message events
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
   let msg = message.text.toLowerCase();
-  //console.log(msg);
+  console.log(msg);
   let regexp = /thank\w*\s*/i;
   if(msg.match(regexp)){
     let re = /<@\w*>/i;
     if(msg.match(re)){
       let user = msg.match(re);
-    rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + user[0] + ">!", message.channel);
+    rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <" + user[0] + ">!", message.channel);
         //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
   }
   }

@@ -29,7 +29,8 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
   let msg = message.text.toLowerCase();
   let regexp = /thank\w*\s*/i;
   if(msg.match(regexp)){
-        rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
+    rtm.sendMessage("You just thanked someone, <@pankaja>!", message.channel);
+        //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
   }
 });
 

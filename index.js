@@ -14,7 +14,7 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
   for (const c of rtmStartData.channels) {
     if (c.is_member && c.name ==='general') { channel = c.id }
   }
-  console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
+  console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}`);
   //console.log(rtmStartData.channels);
 });
 
@@ -33,9 +33,9 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
   let regexp = /thank\w*\s*/i;
   if(msg.match(regexp)){
     let re = /<@\w*>/i;
-    let user = re.substring(2,re.length);
     if(msg.match(re)){
-    rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + re.substring(2,re.length) + ">!", message.channel);
+      let user = msg.match(re);
+    rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + user[0] + ">!", message.channel);
         //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
   }
   }

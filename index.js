@@ -18,18 +18,23 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
   console.log(rtmStartData.channels);
 });
 
+/*
 //post an opening message when the bot is added to a channel
 // you need to wait for the client to fully connect before you can send messages
 rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
   rtm.sendMessage("Hello! Thanks for adding intro-bot!", channel);
 });
+*/
 
 //handling message events
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
   let msg = message.text.toLowerCase();
+  console.log(msg);
   let regexp = /thank\w*\s*/i;
   if(msg.match(regexp)){
-    rtm.sendMessage("You just thanked someone, <@pankaja>!", message.channel);
+    let re = /<@\w*>/i;
+    if(msg.match(re))
+    rtm.sendMessage("Hello, <@"+ message.user + "! You just thanked <@" + re + "!", message.channel);
         //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
   }
 });

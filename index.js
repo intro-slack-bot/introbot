@@ -26,6 +26,10 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
 
 //handling message events
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
-  console.log('Message:', message); //this is no doubt the lamest possible message handler, but you get the idea
+  if(message.text.includes('Thanks')){
+        rtm.sendMessage("Hello <@" + message.user + ">!", message.channel);
+  }
 });
+
 rtm.start();
+

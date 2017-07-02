@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   // Show a cute slack button
-  res.end(`<a href="https://goo.gl/MidmzM">
+  res.end(`<a href="#">
             <img alt="Add to Slack" height="40" width="139" 
             src="https://platform.slack-edge.com/img/add_to_slack.png" 
             srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
@@ -86,8 +86,13 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
     let re = /<@\w*>/i;
     if(msg.match(re)){
       let user = msg.match(re);
-      let helped_userid = user[0].substring(2, user[0].length - 2);
+      let helped_userid = user[0].substring(2, user[0].length - 1);
+      
       /*
+      //get auth-key from db using getToken. 
+       database.getToken(req.body.team_domain, channelname, (err, group) => {
+       });
+      
       helpers.slack('users.info',
                    {
                       token:,

@@ -5,13 +5,9 @@
   "scripts": {
     "start": "node index.js"
   },
-  "author": "Pankaja and Leof",
+  "author": "Pankaja and Leofis",
   "dependencies": {
-    "axios": "^0.13.1",
-    "ws": "^1.1.1",
-		"request": "2.72.0",
-    "mongodb": "*",
-    "synchronize": "^0.9.14",
-    "httpdispatcher":"*"
+    "@slack/client": "^3.10.0",
+    "mongodb": "*"
   }
 }

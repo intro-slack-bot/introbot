@@ -1,3 +1,47 @@
+const express = require("express");
+const bodyParser = require('body-parser');
+
+const app = express();
+app.use(bodyParser.json()); 
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+  // Show a cute slack button
+  res.end(`<a href="https://goo.gl/MidmzM">
+            <img alt="Add to Slack" height="40" width="139" 
+            src="https://platform.slack-edge.com/img/add_to_slack.png" 
+            srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
+            https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" />
+          </a>`)
+});
+
+app.get('/auth', (req, res) => {
+  // Prepare Data for Slack Auth
+  let data = {
+    client_id: process.env.SLACK_CLIENT_ID, 
+    client_secret: process.env.SLACK_CLIENT_SECRET, 
+    code: req.query.code 
+  };
+  
+  // POST the data to slack access endpoint
+  helpers.slack('oauth.access', data)
+  .then((body) => {
+    // Slack User Token
+    let pBody = JSON.parse(body)
+    let token = pBody.access_token;
+    let user = pBody.user_id;
+    let team_id = pBody.team_id;
+    let team_name = pBody.team_name; 
+    
+    // Meanwhile store the {team -> token}
+    database.storeToken(team_name, team_id, user, token);
+    res.redirect(`https://pankaja-shree.github.io/sns-splash/redirect.html`);
+  }).catch(res.end);
+})
+
+
+app.listen(process.env.PORT||"8080");
+         
 //helper functions
 const helpers = require("./helpers.js");
 

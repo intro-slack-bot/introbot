@@ -1,5 +1,6 @@
 //initialize bot interaction using RTM client
 var RtmClient = require('@slack/client').RtmClient;
+var RTM_EVENTS = require('@slack/client').RTM_EVENTS; //to handle messages
 var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 
 var bot_token = process.env.SLACK_BOT_TOKEN || '';
@@ -17,10 +18,14 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
   console.log(rtmStartData.channels);
 });
 
-
+//post an opening message when the bot is added to a channel
 // you need to wait for the client to fully connect before you can send messages
 rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
-  rtm.sendMessage("Hello!", channel);
+  rtm.sendMessage("Hello! Thanks for adding intro-bot!", channel);
 });
 
+//handling message events
+rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
+  console.log('Message:', message); //this is no doubt the lamest possible message handler, but you get the idea
+});
 rtm.start();

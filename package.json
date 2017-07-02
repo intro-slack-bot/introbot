@@ -1,11 +1,11 @@
 {
-  "name": "slack-onboarding-example",
+  "name": "slack-intro-bot",
   "version": "1.0.0",
-  "description": "Example onboarding bot using Slack's Event API",
+  "description": "Store and retrieve info about users of the team and their helpfulness rating",
   "scripts": {
     "start": "node index.js"
   },
-  "author": "John Agan <jagan@slack-corp.com>",
+  "author": "Pankaja and Leof",
   "dependencies": {
     "axios": "^0.13.1",
     "ws": "^1.1.1",

@@ -1,5 +1,20 @@
 const express = require("express");
 const bodyParser = require('body-parser');
+//database related functions
+const database = require("./database.js");
+//helper functions
+const helpers = require("./helpers.js");
+
+//initialize bot interaction using RTM client
+var RtmClient = require('@slack/client').RtmClient;
+var RTM_EVENTS = require('@slack/client').RTM_EVENTS; //to handle messages
+var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
+
+var bot_token = process.env.SLACK_BOT_TOKEN || '';
+
+var rtm = new RtmClient(bot_token);
+
+let channel;
 
 const app = express();
 app.use(bodyParser.json()); 
@@ -33,31 +48,17 @@ app.get('/auth', (req, res) => {
     let team_id = pBody.team_id;
     let team_name = pBody.team_name; 
     
-    /*
-    // Meanwhile store the {team -> token}
+    
+    // store the {team -> token}
     database.storeToken(team_name, team_id, user, token);
     res.redirect(`https://pankaja-shree.github.io/sns-splash/redirect.html`);
   }).catch(res.end);
-  */
-});
+
 });
 
 
 app.listen(process.env.PORT||"8080");
          
-//helper functions
-const helpers = require("./helpers.js");
-
-//initialize bot interaction using RTM client
-var RtmClient = require('@slack/client').RtmClient;
-var RTM_EVENTS = require('@slack/client').RTM_EVENTS; //to handle messages
-var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
-
-var bot_token = process.env.SLACK_BOT_TOKEN || '';
-
-var rtm = new RtmClient(bot_token);
-
-let channel;
 
 // The client will emit an RTM.AUTHENTICATED event on successful connection, with the `rtm.start` payload
 rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {

@@ -10,3 +10,5 @@ const slack = (api, data={}, method='POST') => {
         }
       });
 }
+
+exports.slack = slack;

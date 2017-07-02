@@ -1,3 +1,6 @@
+//helper functions
+const helpers = require("./helpers.js");
+
 //initialize bot interaction using RTM client
 var RtmClient = require('@slack/client').RtmClient;
 var RTM_EVENTS = require('@slack/client').RTM_EVENTS; //to handle messages
@@ -35,6 +38,10 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
     let re = /<@\w*>/i;
     if(msg.match(re)){
       let user = msg.match(re);
+      helpers.slack('users.info',
+                   {
+                      token:
+                    })
     rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <" + user[0] + ">!", message.channel);
         //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
   }

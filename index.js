@@ -33,6 +33,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
   let regexp = /thank\w*\s*/i;
   if(msg.match(regexp)){
     let re = /<@\w*>/i;
+    let user = re.substring(2,re.length());
     if(msg.match(re))
     rtm.sendMessage("Hello, <@"+ message.user + "! You just thanked <@" + re + "!", message.channel);
         //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);

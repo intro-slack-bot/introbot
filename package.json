@@ -8,6 +8,8 @@
   "author": "Pankaja and Leofis",
   "dependencies": {
     "@slack/client": "^3.10.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
     "mongodb": "*",
     "request": "^2.81.0",
     "request-promise": "^4.2.1"

@@ -33,11 +33,14 @@ app.get('/auth', (req, res) => {
     let team_id = pBody.team_id;
     let team_name = pBody.team_name; 
     
+    /*
     // Meanwhile store the {team -> token}
     database.storeToken(team_name, team_id, user, token);
     res.redirect(`https://pankaja-shree.github.io/sns-splash/redirect.html`);
   }).catch(res.end);
-})
+  */
+});
+});
 
 
 app.listen(process.env.PORT||"8080");
@@ -82,11 +85,15 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
     let re = /<@\w*>/i;
     if(msg.match(re)){
       let user = msg.match(re);
+      let helped_userid = user[0].substring(2, user[0].length - 2);
+      /*
       helpers.slack('users.info',
                    {
-                      token:
+                      token:,
+                      user: helped_user
                     })
-    rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <" + user[0] + ">!", message.channel);
+                    */
+    rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + helped_userid + ">!", message.channel);
         //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
   }
   }

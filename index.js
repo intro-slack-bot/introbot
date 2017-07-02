@@ -26,8 +26,9 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
 
 //handling message events
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
-  let mesg = message.text.toLowerCase();
-  if(message.text.includes('thanks')){
+  let msg = message.text.toLowerCase();
+  let regexp = /thank\w*\s*/i;
+  if(msg.includes('thanks') || msg.includes){
         rtm.sendMessage("Hello <@" + message.user + ">!", message.channel);
   }
 });

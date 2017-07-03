@@ -101,16 +101,18 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
       rtm.sendMessage("Intro is empty! Please tell us something about yourself.");
     }
     else{
-      rtm.sendMessage("Intro of <@" + message.user + "> is : " + intro, message.channel);
       //data of user 
       let user = rtm.dataStore.getUserById(message.user);
       let username = user.name;
+      console.log(username);
+      rtm.sendMessage("Intro of " + username + " is : " + intro, message.channel);
       //let userid = user.id; 
       // Get the team's name
       let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-      console.log(team);
+      let teamname = team.name;
+      //let teamid = team.id;
       //console.log(rtm.dataStore.getUserById(message.user));
-      //database.addIntro(team.name,username,intro);
+      database.addIntro(teamname,username,intro);
     }
   }
   // when user say 'get intro @username', we get the introContent from our database

@@ -36,7 +36,7 @@ exports.storeToken = (teamName, teamid, userid, access_token) => {
 * intro
 * point
 */
-// @ why how to get the user id field? or do we really need the user id field
+// why how to get the user id field? or do we really need the user id field
 
 //Get description of the user and his helpfulness point from database, given username.
 exports.getIntro = (teamName, userName) => {

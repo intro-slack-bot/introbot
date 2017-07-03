@@ -19,7 +19,7 @@ exports.storeToken = (teamName, teamid, userid, access_token) => {
         "slack-team": teamName
       }, data, {upsert:true, w: 1}, (err, result)=>{
       
-      if(err != null){
+      if(err){
         console.log("Error happened :(", err);
       }
       
@@ -30,16 +30,25 @@ exports.storeToken = (teamName, teamid, userid, access_token) => {
 
 /* 
 * Collection 2: 
-teamname
-username
-userId
-intro
-rating
+* teamname
+* username
+* userId
+* intro
+* rating
 */
 
 //Get description of the user and his helpfulness rating from database, given username.
 exports.getIntro = (teamName, username) => {
-  
+    MongoClient.connect(process.env.MONGO_URL, (err, db) => {
+      db.collection('slack_user_intros_and_ratings').findOne({'username': username}, {"_id" : 1}, (err, result) => {
+        if (err) {
+          console.log("Error happened :(", err);
+        }
+        if (result) {
+          
+        }
+      })
+    });
 }
 
 //Get helpfulness rating only from database, given username.

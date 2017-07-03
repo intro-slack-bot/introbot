@@ -102,9 +102,15 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     }
     else{
       rtm.sendMessage("Intro of <@" + message.user + "> is : " + intro, message.channel);
+      //data of user 
+      let user = rtm.dataStore.getUserById(message.user);
+      let username = user.name;
+      //let userid = user.id; 
       // Get the team's name
       let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-      database.addIntro(team.name,message.user,intro);
+      console.log(team);
+      //console.log(rtm.dataStore.getUserById(message.user));
+      //database.addIntro(team.name,username,intro);
     }
   }
   // when user say 'get intro @username', we get the introContent from our database

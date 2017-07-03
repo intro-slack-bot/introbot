@@ -63,7 +63,7 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function() {
 
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to write in ES5 style here? - I just copied from slack docs :P
   let msg = message.text.toLowerCase();
-  console.log(msg);
+  //console.log(msg);
   let thankRegexp = /thank\w*\s*/i;
   let addIntroRegexp = /addIntro\w*\s*/i;
   let getIntroRegexp = /getIntro\w*\s*/i;
@@ -104,15 +104,14 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
       //data of user 
       let user = rtm.dataStore.getUserById(message.user);
       let username = user.name;
-      console.log(username);
-      rtm.sendMessage("Intro of " + username + " is : " + intro, message.channel);
+      rtm.sendMessage("Added Intro of " + username + " to database : " + intro, message.channel);
       //let userid = user.id; 
       // Get the team's name
       let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
       let teamname = team.name;
       //let teamid = team.id;
       //console.log(rtm.dataStore.getUserById(message.user));
-      database.addIntro(teamname,username,intro);
+      database.addIntro(teamname,username,user.id,intro);
     }
   }
   // when user say 'get intro @username', we get the introContent from our database

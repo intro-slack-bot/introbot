@@ -108,14 +108,15 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
   if(msg.match(addIntroRegexp)){
     let intro = msg.substr(9);
     if(intro.length > 50){
-      res.end("Your Intro is too long");
+      rtm.sendMessage("Your Intro is too long!");
     }
-    rtm.sendMessage("Intro of <@" + message.user + "> is : " + intr, message.channel)
-    if(msg.match(re)){
-      let user = msg.match(re);
-      let addIntro_userid = user.substring(2, user[0].length - 1);
-
-    }  
+    else if(intro.length == 0){
+      rtm.sendMessage("Intro is empty! Please tell us something about yourself.");
+    }
+    else{
+      rtm.sendMessage("Intro of <@" + message.user + "> is : " + intro, message.channel);
+      database.addIntro(message.user,intro);
+    }
   }
   // when user say 'get intro @username', we get the introContent from our database
   if(msg.match(getIntroRegexp)){

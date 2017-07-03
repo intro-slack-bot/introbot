@@ -38,27 +38,48 @@ exports.storeToken = (teamName, teamid, userid, access_token) => {
 */
 
 //Get description of the user and his helpfulness rating from database, given username.
-exports.getIntro = (teamName, username) => {
+exports.getIntro = (teamName, userName) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      db.collection('slack_user_intros_and_ratings').findOne({'username': username}, {"_id" : 1}, (err, result) => {
+      db.collection('slack_user_intros_and_ratings').findOne({'teamname': teamName, 'username': userName}, {"intro" : 1}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
         }
-        if (result) {
-          
+        if (intro) {
+          return intro;
         }
+        db.close();
       })
     });
 }
 
 //Get helpfulness rating only from database, given username.
-exports.getRating = (teamName, username) => {
-  
+exports.getRating = (teamName, userName) => {
+    MongoClient.connect(process.env.MONGO_URL, (err, db) => {
+      db.collection('slack_user_intros_and_ratings').findOne({'teamname': teamName, 'username': userName}, {"rating" : 1}, (err, rating) => {
+        if (err) {
+          console.log("Error happened :(", err);
+        }
+        if (rating) {
+          return rating;
+        }
+        db.close();
+      });
+    });  
 }
 
 //insert/update an intro about a user to the database
-exports.addIntro = (teamName, username, intro) => {
-  
+exports.addIntro = (teamName, userName, intro) => {
+    MongoClient.connect(process.env.MONGO_URL, (err, db) => {
+      db.collection('slack_user_intros_and_ratings').findOne({'teamname': teamName, 'username': userName}, {'intro' : 1}, (err, intro) => {
+        if (err) {
+          console.log("Error happened :(", err);
+        }
+        if (intro) {
+          
+        }
+        db.close();
+      });
+    });       
 }
 
 //insert/update rating of a user to the database

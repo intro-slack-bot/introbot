@@ -34,13 +34,13 @@ exports.storeToken = (teamName, teamid, userid, access_token) => {
 * username
 * userId
 * intro
-* rating
+* point
 */
 
-//Get description of the user and his helpfulness rating from database, given username.
+//Get description of the user and his helpfulness point from database, given username.
 exports.getIntro = (teamName, userName) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      db.collection('slack_user_intros_and_ratings').findOne({'teamname': teamName, 'username': userName}, {"intro" : 1}, (err, intro) => {
+      db.collection('slack_user_intros_and_helpfulness_point').findOne({'teamname': teamName, 'username': userName}, {"intro" : 1}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
         }
@@ -52,15 +52,15 @@ exports.getIntro = (teamName, userName) => {
     });
 }
 
-//Get helpfulness rating only from database, given username.
-exports.getRating = (teamName, userName) => {
+//Get helpfulness point only from database, given username.
+exports.getpoint = (teamName, userName) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      db.collection('slack_user_intros_and_ratings').findOne({'teamname': teamName, 'username': userName}, {"rating" : 1}, (err, rating) => {
+      db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {'point': 1}, (err, point) => {
         if (err) {
           console.log("Error happened :(", err);
         }
-        if (rating) {
-          return rating;
+        if (point) {
+          return point;
         }
         db.close();
       });
@@ -70,7 +70,7 @@ exports.getRating = (teamName, userName) => {
 //insert/update an intro about a user to the database
 exports.addIntro = (teamName, userName, intro) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      db.collection('slack_user_intros_and_ratings').update({'teamname': teamName, 'username': userName}, {'teamname': teamName, 'username': userName, 'intro': intro}, {upsert: true}, (err, intro) => {
+      db.collection('slack_user_intros_and_points').update({'teamname': teamName, 'username': userName}, {'teamname': teamName, 'username': userName, 'intro': intro, 'point': 0}, {upsert: true}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
         }
@@ -82,14 +82,19 @@ exports.addIntro = (teamName, userName, intro) => {
     });       
 }
 
-//insert/update rating of a user to the database
-exports.incrementRating = (teamName, userName) => {
+//insert/update helpfulness point of a user to the database
+exports.incrementpoint = (teamName, userName) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      db.collection('slack_user_intros_and_ratings').findOne({'teamname': teamName, 'user'})
-      db.collection('slack_user_intros_and_ratings').update(
+      // c
+      db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {'point': 1}, (err, point) {
+         if (!point) {
+           db.collection('slack_user_intros_and_points').insert({'teamname': teamName, 'username': userName, 'intro': '', 'point': 0}); 
+         }                                                   
+      });
+      db.collection('slack_user_intros_and_points').update(
         {'teamname': teamName, 'username': userName}, 
         {$set: {'teamname': teamName, 'username': userName},
-         $inc: {'rating': 1}
+         $inc: {'point': 1}
         }, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);

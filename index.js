@@ -14,7 +14,12 @@ const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 
 const bot_token = process.env.SLACK_BOT_TOKEN || '';
 
-const rtm = new RtmClient(bot_token);
+var rtm = new RtmClient(bot_token, {
+  // Sets the level of logging we require
+  logLevel: 'error',
+  // Initialise a data store for our client, this will load additional helper functions for the storing and retrieval of data
+  dataStore: new MemoryDataStore()
+});
 
 let channel;
 
@@ -39,13 +44,20 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
   //console.log(rtmStartData.channels);
 });
 
-/*
-//post an opening message when the bot is added to a channel
-// you need to wait for the client to fully connect before you can send messages
-rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
-  rtm.sendMessage("Hello! Thanks for adding intro-bot!", channel);
+// Wait for the client to connect
+rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function() {
+  // Get the user's name
+  var user = rtm.dataStore.getUserById(rtm.activeUserId);
+
+  // Get the team's name
+  var team = rtm.dataStore.getTeamById(rtm.activeTeamId);
+
+  // Log the slack team name and the bot's name
+  console.log('Connected to ' + team.name + ' as ' + user.name);
+  
+  //post an opening message when the bot is added to a channel
+  //rtm.sendMessage("Hello! Thanks for adding intro-bot!", channel);
 });
-*/
 
 //handling message events
 
@@ -90,7 +102,9 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     }
     else{
       rtm.sendMessage("Intro of <@" + message.user + "> is : " + intro, message.channel);
-      database.addIntro(message.user,intro);
+      // Get the team's name
+      let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
+      database.addIntro(team.name,message.user,intro);
     }
   }
   // when user say 'get intro @username', we get the introContent from our database

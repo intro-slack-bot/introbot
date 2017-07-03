@@ -1,4 +1,4 @@
-const express = require("express");
+const expre    let re ss = require("express");
 const bodyParser = require('body-parser');
 //database related functions
 const database = require("./database.js");
@@ -104,7 +104,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
       //data of user 
       let user = rtm.dataStore.getUserById(message.user);
       let username = user.name;
-      rtm.sendMessage("Added Intro of " + username + " to database : " + intro, message.channel);
+      rtm.sendMessage("Added Intro of " + username + " to database : " + intro, message.channel); //need to format this message attractively
       //let userid = user.id; 
       // Get the team's name
       let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
@@ -115,8 +115,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     }
   }
   // when user say 'get intro @username', we get the introContent from our database
-  if(msg.match(getIntroRegexp)){
-    let re = /<@\w*>/i;
+  if(msg.match(getIntr    let user oR    let re = /<@\w*>/i;
     if(msg.match(re)){
       let user = msg.match(re);
       let addIntro_userid = user.substring(2, user[0].length - 1);
@@ -124,7 +123,5 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     }
   }   
   
-});
-
-rtm.start();
+}.start();
 

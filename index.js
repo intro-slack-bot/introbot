@@ -78,7 +78,7 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
 */
 
 //handling message events
-rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {
+rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to write in ES5 style here?
   let msg = message.text.toLowerCase();
   console.log(msg);
   let regexp = /thank\w*\s*/i;

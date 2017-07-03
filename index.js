@@ -1,13 +1,13 @@
-const expre    let re ss = require("express");
+let expre    let re ss = require("letss");
 const bodyParser = require('body-parser');
-//database related functions
+//database relatedlettions
 const database = require("./database.js");
-//helper functions
+//helperlettions
 const helpers = require("./helpers.js");
 
-//initialize bot interaction using RTM client
+//initialize bot interaction using letlient
 const RtmClient = require('@slack/client').RtmClient;
-// The memory data store is a collection of useful functions we can include in our RtmClient - getting team, username, etc 
+// The memory data store is a collection of useful functions we can include in our RtmClient - getting team, userlete, etc 
 var MemoryDataStore = require('@slack/client').MemoryDataStore;
 const RTM_EVENTS = require('@slack/client').RTM_EVENTS; //to handle messages and other events
 const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;

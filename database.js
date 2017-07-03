@@ -36,6 +36,7 @@ exports.storeToken = (teamName, teamid, userid, access_token) => {
 * intro
 * point
 */
+// @ why how to get the user id field? or do we really need the user id field
 
 //Get description of the user and his helpfulness point from database, given username.
 exports.getIntro = (teamName, userName) => {
@@ -74,9 +75,7 @@ exports.addIntro = (teamName, userName, intro) => {
         if (err) {
           console.log("Error happened :(", err);
         }
-        if (intro) {
-          
-        }
+
         db.close();
       });
     });       
@@ -85,8 +84,8 @@ exports.addIntro = (teamName, userName, intro) => {
 //insert/update helpfulness point of a user to the database
 exports.incrementpoint = (teamName, userName) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      // c
-      db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {'point': 1}, (err, point) {
+      // create new document if the user is not exist
+      db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {'point': 1}, (err, point) => {
          if (!point) {
            db.collection('slack_user_intros_and_points').insert({'teamname': teamName, 'username': userName, 'intro': '', 'point': 0}); 
          }                                                   
@@ -99,9 +98,7 @@ exports.incrementpoint = (teamName, userName) => {
         if (err) {
           console.log("Error happened :(", err);
         }
-        if (intro) {
-          
-        }
+
         db.close();
       });
     });  

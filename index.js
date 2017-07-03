@@ -86,7 +86,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     let re = /<@\w*>/i;
     if(msg.match(re)){
       let user = msg.match(re);
-      let helped_userid = user[0].substring(2, user[0].length - 1);
+      let helped_userid = user.substring(2, user[0].length - 1);
       
       /*
       //get auth-key from db using getToken. 

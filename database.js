@@ -1,7 +1,9 @@
 var MongoClient = require('mongodb').MongoClient;
 
 /* Add the access token to database collection slack_user_tokens. Token is needed to get username using users.info method of Slack API
- * teamName : {string} : Name of team
+ * teamName : {string} : Name of the team
+ * teamid: {string}: ID of the team
+ * userid: {string}: ID of the user
  * access_token : {string} : Code to get access for team
  */
 exports.storeToken = (teamName, teamid, userid, access_token) => {
@@ -27,7 +29,7 @@ exports.storeToken = (teamName, teamid, userid, access_token) => {
 }
 
 /* 
-Collection 2: 
+* Collection 2: 
 teamname
 username
 userId

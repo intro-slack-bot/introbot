@@ -1,6 +1,6 @@
 var MongoClient = require('mongodb').MongoClient;
 
-/* Add the access token to database. Token is needed to get username using users.info method of Slack API
+/* Add the access token to database collection slack_user_tokens. Token is needed to get username using users.info method of Slack API
  * teamName : {string} : Name of team
  * access_token : {string} : Code to get access for team
  */
@@ -26,17 +26,31 @@ exports.storeToken = (teamName, teamid, userid, access_token) => {
   });
 }
 
+/* 
+Collection 2: 
+teamname
+username
+userId
+intro
+rating
+*/
+
 //Get description of the user and his helpfulness rating from database, given username.
-exports.getIntro = (username) => {
+exports.getIntro = (teamName, username) => {
   
 }
 
 //Get helpfulness rating only from database, given username.
-exports.getRating = (username) => {
+exports.getRating = (teamName, username) => {
   
 }
 
-//insert an intro about a user to the database
-exports.addIntro = (username, intro) => {
+//insert/update an intro about a user to the database
+exports.addIntro = (teamName, username, intro) => {
+  
+}
+
+//insert/update rating of a user to the database
+exports.addRating = (teamName, username, rating) => {
   
 }

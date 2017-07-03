@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   // Show a cute slack button
-  res.end(`<a href="https://slack.com/oauth/authorize?scope=incoming-webhook,commands,bot&client_id=204082547206.207027688375"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>`)
+  res.end(`<a href="https://slack.com/oauth/authorize?scope=commands,bot&client_id=204082547206.207027688375"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>`)
 });
 
 app.get('/auth', (req, res) => {
@@ -46,7 +46,7 @@ app.get('/auth', (req, res) => {
     
     // store the {team -> token}
     database.storeToken(team_name, team_id, user, token);
-    res.redirect(`https://pankaja-shree.github.io/sns-splash/redirect.html`);
+    res.redirect(`https://pankaja-shree.github.io/sns-splash/redirect.html`); //need to change url
   }).catch(res.end);
 
 });

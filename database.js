@@ -26,14 +26,14 @@ exports.getIntro = (teamName, userName, callback) => {
 }
 
 //Get helpfulness point only from database, given username.
-exports.getpoint = (teamName, userName) => {
+exports.getPoint = (teamName, userName, callback) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
       db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {'point': 1}, (err, point) => {
-        if (err) {
+        if (err) { 
           console.log("Error happened :(", err);
         }
         if (point) {
-          return point;
+          callback(point);
         }
         db.close();
       });

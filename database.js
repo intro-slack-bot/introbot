@@ -70,7 +70,7 @@ exports.getRating = (teamName, userName) => {
 //insert/update an intro about a user to the database
 exports.addIntro = (teamName, userName, intro) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      db.collection('slack_user_intros_and_ratings').findOne({'teamname': teamName, 'username': userName}, {'intro' : 1}, (err, intro) => {
+      db.collection('slack_user_intros_and_ratings').update({'teamname': teamName, 'username': userName}, {'teamname': teamName, 'username': userName, 'intro': intro}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
         }

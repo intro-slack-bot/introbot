@@ -41,7 +41,7 @@ exports.storeToken = (teamName, teamid, userid, access_token) => {
 //Get description of the user and his helpfulness point from database, given username.
 exports.getIntro = (teamName, userName) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      db.collection('slack_user_intros_and_helpfulness_point').findOne({'teamname': teamName, 'username': userName}, {"intro" : 1}, (err, intro) => {
+      db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {"intro" : 1}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
         }

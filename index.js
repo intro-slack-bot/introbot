@@ -79,7 +79,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
   console.log(msg);
   let thankRegexp = /thank\w*\s*/i;
   let addIntroRegexp = /addIntro\w*\s*/i;
-  let getIntroRegexp = /addIntro\w*\s*/i;
+  let getIntroRegexp = /getIntro\w*\s*/i;
   // when user say 'thanks @username' we increment this user's point
   if(msg.match(thankRegexp)){
     let re = /<@\w*>/i;
@@ -102,17 +102,19 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
     }
   }
-  // when user say 'add intro @username introContent', we add the introContent to our database
+  // when user say 'add intro introContent', we add the introContent to our database
   // actually we might also need to listen for the edit event and then update our database
   if(msg.match(addIntroRegexp)){
     let re = /<@\w*>/i;
+    rtm.sendMessage("Intro of" + message.user + "")
     if(msg.match(re)){
       let user = msg.match(re);
       let addIntro_userid = user.substring(2, user[0].length - 1);
 
     }  
   }
-  if(msg.match(addIntroRegexp)){
+  // when user say 'get intro @username', we get the introContent from our database
+  if(msg.match(getIntroRegexp)){
     let re = /<@\w*>/i;
     if(msg.match(re)){
       let user = msg.match(re);

@@ -61,7 +61,7 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function() {
 
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to write in ES5 style here? - I just copied from slack docs :P
   let msg = message.text.toLowerCase();
-  //console.log(msg);
+  console.log(msg);
   let thankRegexp = /thank\w*\s*/i;
   let addIntroRegexp = /addIntro\w*\s*/i;
   let getIntroRegexp = /getIntro\w*\s*/i;
@@ -83,7 +83,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
   // actually we might also need to listen for the edit event and then update our database
   if(msg.match(addIntroRegexp)){
     let intro = msg.substr(9);
-    if(intro.length > 50){
+    if(intro.length > 500){
       rtm.sendMessage("Your Intro is too long!");
     }
     else if(intro.length == 0){

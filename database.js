@@ -1,35 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 
-/* Add the access token to database collection slack_user_tokens. Token is needed to get username using users.info method of Slack API
- * teamName : {string} : Name of the team
- * teamid: {string}: ID of the team
- * userid: {string}: ID of the user
- * access_token : {string} : Code to get access for team
- */
-exports.storeToken = (teamName, teamid, userid, access_token) => {
-  let data = {
-    "slack-team": teamName,
-    "team-id": teamid,
-    "user-id": userid,
-    "token": access_token
-  }
-  
-  MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-    db.collection('slack_user_tokens').updateOne({
-        "slack-team": teamName
-      }, data, {upsert:true, w: 1}, (err, result)=>{
-      
-      if(err){
-        console.log("Error happened :(", err);
-      }
-      
-      db.close();  
-    })
-  });
-}
-
 /* 
-* Collection 2: 
+* Collection: slack_user_intros_and_points 
 * teamname
 * username
 * userId
@@ -39,14 +11,14 @@ exports.storeToken = (teamName, teamid, userid, access_token) => {
 // why how to get the user id field? or do we really need the user id field
 
 //Get description of the user and his helpfulness point from database, given username.
-exports.getIntro = (teamName, userName) => {
+exports.getIntro = (teamName, userName, callback) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
       db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {"intro" : 1}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
         }
         if (intro) {
-          return intro;
+          callback(intro);
         }
         db.close();
       })

@@ -114,7 +114,10 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
   }
   // when user say 'get intro @username', we get the introContent from our database
   if(msg.match(getIntroRegexp)){
-        let user = msg.substr(9);  
+        let username = msg.substr(9); 
+        let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
+        let teamname = team.name;
+        database.getIntro(teamname,username, (intro));
   }
   });   
   

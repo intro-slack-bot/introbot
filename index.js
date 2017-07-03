@@ -7,7 +7,9 @@ const helpers = require("./helpers.js");
 
 //initialize bot interaction using RTM client
 const RtmClient = require('@slack/client').RtmClient;
-const RTM_EVENTS = require('@slack/client').RTM_EVENTS; //to handle messages
+// The memory data store is a collection of useful functions we can include in our RtmClient - getting team, username, etc 
+var MemoryDataStore = require('@slack/client').MemoryDataStore;
+const RTM_EVENTS = require('@slack/client').RTM_EVENTS; //to handle messages and other events
 const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 
 const bot_token = process.env.SLACK_BOT_TOKEN || '';
@@ -24,33 +26,6 @@ app.get('/', (req, res) => {
   // Show a cute slack button
   res.end(`<a href="https://slack.com/oauth/authorize?scope=commands,bot&client_id=204082547206.207027688375"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>`)
 });
-
-app.get('/auth', (req, res) => {
-  // Prepare Data for Slack Auth
-  let data = {
-    client_id: process.env.SLACK_CLIENT_ID, 
-    client_secret: process.env.SLACK_CLIENT_SECRET, 
-    code: req.query.code 
-  };
-  
-  // POST the data to slack access endpoint
-  helpers.slack('oauth.access', data)
-  .then((body) => {
-    // Slack User Token
-    let pBody = JSON.parse(body)
-    let token = pBody.access_token;
-    let user = pBody.user_id;
-    let team_id = pBody.team_id;
-    let team_name = pBody.team_name; 
-    
-    
-    // store the {team -> token}
-    database.storeToken(team_name, team_id, user, token);
-    res.redirect(`https://introbot.glitch.me/auth/grant`); //need to change url
-  }).catch(res.end);
-
-});
-
 
 app.listen(process.env.PORT||"8080");
          

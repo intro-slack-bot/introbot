@@ -68,23 +68,14 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
   let getPointRegexp = /getPoint\w*\s*/i;
   // when user say 'thanks @username' we increment this user's point
   if(msg.match(thankRegexp)){
-    let re = /<@\w*>/i;
+    let re = /<@\w*>/i; //to get @username string from the message - this will have the user-id , not user-name. 
     if(msg.match(re)){
       let user = msg.match(re);
       let helped_userid = user.substring(2, user[0].length - 1);
       
-      /*
-      //get auth-key from db using getToken. 
-       database.getToken(req.body.team_domain, channelname, (err, group) => {
-       });
+      //need to 
       
-      helpers.slack('users.info',
-                   {
-                      token:,
-                      user: helped_user
-                    })
-                    */
-    rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + helped_userid + ">!", message.channel);
+     rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + helped_userid + ">!", message.channel);
         //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
     }
   }
@@ -117,8 +108,14 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let username = msg.substr(9); 
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
-        database.getIntro(teamname,username, (intro));
+        database.getIntro(teamname,username, (data) => {
+          //console.log(data); 
+          rtm.sendMessage("Intro of user - " + username + " is: \n" + data.intro , message.channel);
+        });
   }
+  
+  //get points 
+  
   });   
   
 rtm.start();

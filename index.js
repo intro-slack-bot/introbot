@@ -6,13 +6,13 @@ const database = require("./database.js");
 const helpers = require("./helpers.js");
 
 //initialize bot interaction using RTM client
-var RtmClient = require('@slack/client').RtmClient;
-var RTM_EVENTS = require('@slack/client').RTM_EVENTS; //to handle messages
-var CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
+const RtmClient = require('@slack/client').RtmClient;
+const RTM_EVENTS = require('@slack/client').RTM_EVENTS; //to handle messages
+const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 
-var bot_token = process.env.SLACK_BOT_TOKEN || '';
+const bot_token = process.env.SLACK_BOT_TOKEN || '';
 
-var rtm = new RtmClient(bot_token);
+const rtm = new RtmClient(bot_token);
 
 let channel;
 
@@ -80,6 +80,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
   let thankRegexp = /thank\w*\s*/i;
   let addIntroRegexp = /addIntro\w*\s*/i;
   let getIntroRegexp = /getIntro\w*\s*/i;
+  let getPointRegexp = /getPoint\w*\s*/i;
   // when user say 'thanks @username' we increment this user's point
   if(msg.match(thankRegexp)){
     let re = /<@\w*>/i;
@@ -105,8 +106,11 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
   // when user say 'add intro introContent', we add the introContent to our database
   // actually we might also need to listen for the edit event and then update our database
   if(msg.match(addIntroRegexp)){
-    let re = /<@\w*>/i;
-    rtm.sendMessage("Intro of" + message.user + "")
+    let intro = msg.substr(9);
+    if(intro.length > 50){
+      res.end("Your Intro is too long");
+    }
+    rtm.sendMessage("Intro of <@" + message.user + "> is : " + intr, message.channel)
     if(msg.match(re)){
       let user = msg.match(re);
       let addIntro_userid = user.substring(2, user[0].length - 1);

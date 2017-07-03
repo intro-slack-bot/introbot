@@ -129,6 +129,6 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         });
   } 
   });    
-    
+     
 rtm.start();
 

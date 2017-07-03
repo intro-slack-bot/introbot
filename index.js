@@ -74,7 +74,7 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
 
 //handling message events
 
-rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to write in ES5 style here?
+rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to write in ES5 style here? - I just copied from slack docs :P
   let msg = message.text.toLowerCase();
   console.log(msg);
   let thankRegexp = /thank\w*\s*/i;

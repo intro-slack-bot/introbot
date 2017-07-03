@@ -1,13 +1,13 @@
-let expre    let re ss = require("letss");
+const expre    let re ss = require("constss");
 const bodyParser = require('body-parser');
-//database relatedlettions
+//database relatedconsttions
 const database = require("./database.js");
-//helperlettions
+//helperconsttions
 const helpers = require("./helpers.js");
 
-//initialize bot interaction using letlient
+//initialize bot interaction using constlient
 const RtmClient = require('@slack/client').RtmClient;
-// The memory data store is a collection of useful functions we can include in our RtmClient - getting team, userlete, etc 
+// The memory data store is a collection of useful functions we can include in our RtmClient - getting team, userconste, etc 
 var MemoryDataStore = require('@slack/client').MemoryDataStore;
 const RTM_EVENTS = require('@slack/client').RTM_EVENTS; //to handle messages and other events
 const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
@@ -21,7 +21,7 @@ var rtm = new RtmClient(bot_token, {
   dataStore: new MemoryDataStore()
 });
 
-let channel;
+l etletnel;
 
 const app = express();
 app.use(bodyParser.json()); 
@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
   res.end(`<a href="https://slack.com/oauth/authorize?scope=commands,bot&client_id=204082547206.207027688375"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>`)
 });
 
-app.listen(process.env.PORT||"8080");
+app.listen(process.env.POR;
          
 
 // The client will emit an RTM.AUTHENTICATED event on successful connection, with the `rtm.start` payload
@@ -115,10 +115,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     }
   }
   // when user say 'get intro @username', we get the introContent from our database
-  if(msg.match(getIntr    let user oR    let re = /<@\w*>/i;
-    if(msg.match(re)){
-      let user = msg.match(re);
-      let addIntro_userid = user.substring(2, user[0].length - 1);
+  if(msg.match(getIntr    let user oRmsg.substr(9)    leconsole.log(user);0].length - 1);
 
     }
   }   

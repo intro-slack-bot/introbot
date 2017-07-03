@@ -78,11 +78,14 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
 */
 
 //handling message events
+
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to write in ES5 style here?
   let msg = message.text.toLowerCase();
   console.log(msg);
   let thankRegexp = /thank\w*\s*/i;
-  let addIntroRegexp =
+  let addIntroRegexp = /addIntro\w*\s*/i;
+  let getIntroRegexp = /addIntro\w*\s*/i;
+  // when user say 'thanks @username' we increment this user's point
   if(msg.match(thankRegexp)){
     let re = /<@\w*>/i;
     if(msg.match(re)){
@@ -102,9 +105,26 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
                     */
     rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + helped_userid + ">!", message.channel);
         //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
+    }
   }
+  // when user say 'add intro @username introContent', we add the introContent to our database
+  // actually we might also need to listen for the edit event and then update our database
+  if(msg.match(addIntroRegexp)){
+    let re = /<@\w*>/i;
+    if(msg.match(re)){
+      let user = msg.match(re);
+      let addIntro_userid = user.substring(2, user[0].length - 1);
+
+    }  
   }
-  
+  if(msg.match(addIntroRegexp)){
+    let re = /<@\w*>/i;
+    if(msg.match(re)){
+      let user = msg.match(re);
+      let addIntro_userid = user.substring(2, user[0].length - 1);
+
+    }
+  }   
   
 });
 

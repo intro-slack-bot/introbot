@@ -46,7 +46,7 @@ app.get('/auth', (req, res) => {
     
     // store the {team -> token}
     database.storeToken(team_name, team_id, user, token);
-    res.redirect(`https://pankaja-shree.github.io/sns-splash/redirect.html`); //need to change url
+    res.redirect(`https://introbot.glitch.me/auth/grant`); //need to change url
   }).catch(res.end);
 
 });

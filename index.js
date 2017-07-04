@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 
 app.listen(process.env.PORT||"8080"); 
          
+let channel;
 
 // The client will emit an RTM.AUTHENTICATED event on successful connection, with the `rtm.start` payload
 rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
@@ -73,6 +74,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     let addIntroRegexp = /addIntro\w*\s*/i;
     let getIntroRegexp = /getIntro\w*\s*/i;
     let getPointRegexp = /getPoint\w*\s*/i;
+    let messageSen
     // when user say 'thanks @username' we increment this user's point
     if(msg.match(thankRegexp)){
       let re = /<@\w*>/i; //to get @username string from the message - this will have the user-id , not user-name. 
@@ -82,8 +84,9 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let helped_userid = user[0].substring(2, user[0].length - 1);
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
-        //need to 
-        database.incrementpoint(teamname, helped_userid); 
+        //need to
+        console.log(user.id);
+        database.incrementpoint(teamname, user.id); 
         rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + helped_userid + ">!", message.channel);
           //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
       }

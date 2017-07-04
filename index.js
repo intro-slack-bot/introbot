@@ -71,7 +71,8 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     let re = /<@\w*>/i; //to get @username string from the message - this will have the user-id , not user-name. 
     if(msg.match(re)){
       let user = msg.match(re);
-      let helped_userid = user.substring(2, user[0].length - 1);
+      console.log(user[0]);
+      let helped_userid = user[0].substring(2, user[0].length - 1);
       
       //need to 
       
@@ -100,7 +101,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
       let teamname = team.name;
       //let teamid = team.id;
       //console.log(rtm.dataStore.getUserById(message.user));
-      database.addIntro(teamname,username,user.id,intro);
+      database.addIntro(teamname, username, user.id, intro);
     }
   }
   // when user say 'getIntro username', we get the introContent from our database for that username

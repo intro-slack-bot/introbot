@@ -78,7 +78,9 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
       let re = /<@\w*>/i; //to get @username string from the message - this will have the user-id , not user-name. 
       if(msg.match(re)){
         let user = msg.match(re);
+        console.log(user);
         let username = user.name;
+        console.log(username);
         let helped_userid = user[0].substring(2, user[0].length - 1);
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;

@@ -62,7 +62,7 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function() {
 //handling message events
 
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to write in ES5 style here? - I just copied from slack docs :P
-
+ console.log("Sender:" + message.user);
   
   if (message.subtype === 'message_changed') {// do something when user edited a message
     let msg = message.message.text.toLowerCase();

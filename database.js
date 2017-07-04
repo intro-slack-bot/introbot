@@ -54,14 +54,15 @@ exports.addIntro = (teamName, userName, userId, intro) => {
 }
 
 //insert/update helpfulness point of a user to the database
-exports.incrementpoint = (teamName, userName) => {
+exports.incrementpoint = (teamName, userId) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
       // create new document if the user is not exist
-      db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {'point': 1}, (err, point) => {
+      db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'userId': userId}, {'point': 1}, (err, point) => {
          if (!point) {
-           db.collection('slack_user_intros_and_points').insert({'teamname': teamName, 'username': userName, 'intro': '', 'point': 0}); 
+           db.collection('slack_user_intros_and_points').insert({'teamname': teamName, 'userId': userId, 'intro': '', 'point': 0}); 
          }                                                   
       });
+      // increment the user point in the database
       db.collection('slack_user_intros_and_points').update(
         {'teamname': teamName, 'username': userName}, 
         {$set: {'teamname': teamName, 'username': userName},

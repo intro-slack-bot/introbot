@@ -71,12 +71,13 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     let re = /<@\w*>/i; //to get @username string from the message - this will have the user-id , not user-name. 
     if(msg.match(re)){
       let user = msg.match(re);
-      console.log(user[0]);
+      let username = user.name;
       let helped_userid = user[0].substring(2, user[0].length - 1);
-      
+      let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
+      let teamname = team.name;
       //need to 
-      
-     rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + helped_userid + ">!", message.channel);
+      database.incrementpoint(teamname, user.id); 
+      rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + helped_userid + ">!", message.channel);
         //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
     }
   }

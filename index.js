@@ -78,9 +78,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
       let re = /<@\w*>/i; //to get @username string from the message - this will have the user-id , not user-name. 
       if(msg.match(re)){
         let user = msg.match(re);
-        console.log(user);
         let username = user.name;
-        console.log(username);
         let helped_userid = user[0].substring(2, user[0].length - 1);
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
@@ -92,60 +90,59 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     }
     // when user say 'addIntro introContent', we add the introContent to our database
     // actually we might also need to listen for the edit event and then update our database
-    addIntro(msg);
+    if(msg.match(addIntroRegexp)){
+      let intro = msg.substr(9);
+      if(intro.length > 5000){
+        rtm.sendMessage("Your Intro is too long!");
+      }
+      else if(intro.length == 0){
+        rtm.sendMessage("Intro is empty! Please tell us something about yourself.");
+      }
+      else{
+        //data of user 
+        let user = rtm.dataStore.getUserById(message.user);
+        let username = user.name;
+        rtm.sendMessage("Added Intro of " + username + " to database : " + intro, message.channel); //need to format this message attractively
+        //let userid = user.id; 
+        // Get the team's name
+        let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
+        let teamname = team.name;
+        //let teamid = team.id;
+        //console.log(rtm.dataStore.getUserById(message.user));
+        database.addIntro(teamname, username, user.id, intro);
+      }
+    }
     // when user say 'getIntro username', we get the introContent from our database for that username
     //Eg: getIntro pankaja 
     if(msg.match(getIntroRegexp)){
-        let username = msg.substr(9); 
-        let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-        let teamname = team.name;
-        database.getIntro(teamname,username, (data) => {
-          //console.log(data); 
-          rtm.sendMessage("Intro of user - " + username + " is: \n" + data.intro , message.channel);
-        });
+          let username = msg.substr(9); 
+          let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
+          let teamname = team.name;
+          database.getIntro(teamname,username, (data) => {
+            //console.log(data); 
+            rtm.sendMessage("Intro of user - " + username + " is: \n" + data.intro , message.channel);
+          });
     }
 
     //get points for a username 
     //Eg: getPoints or getPoint pankaja
     if(msg.match(getPointRegexp)){ 
-        let username = msg.substr(9); 
-        let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-        let teamname = team.name;
-        database.getPoint(teamname,username, (data) => {
+          let username = msg.substr(9); 
+          let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
+          let teamname = team.name;
+          database.getPoint(teamname,username, (data) => {
             //console.log(data); 
             rtm.sendMessage("Helpfullness points of user - " + username + " : \n" + data.point , message.channel);
             //May be we can think of better ways of displaying the points? instead of just numbers.
             //Also, feel free to change any of the sentences
-        });
+          });
     }    
   }
   });
 
 let addIntro = (message) => {
-    let addIntroRegexp = /addIntro\w*\s*/i;
-    if(message.match(addIntroRegexp)){
-        let intro = message.substr(9);
-        if(intro.length > 5000){
-            rtm.sendMessage("Your Intro is too long!");
-        }
-        else if(intro.length === 0){
-            rtm.sendMessage("Intro is empty! Please tell us something about yourself.");
-        }
-        else{
-            //data of user 
-            let user = rtm.dataStore.getUserById(message.user);
-            let username = user.name;
-            rtm.sendMessage("Added Intro of " + username + " to database : " + intro, message.channel); //need to format this message attractively
-            //let userid = user.id; 
-            // Get the team's name
-            let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-            let teamname = team.name;
-            //let teamid = team.id;
-            //console.log(rtm.dataStore.getUserById(message.user));
-            database.addIntro(teamname, username, user.id, intro);
-        }
-    }
-};
+  
+}
      
 rtm.start();
 

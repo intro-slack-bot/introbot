@@ -65,7 +65,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
   
   if (message.subtype === 'message_changed') {
     console.log('someone edited the message!!!')
-  }else {
+  }else if (!message.subtype){// if we don't add this condition, the program will run when we delete the message and i
     let msg = message.text.toLowerCase();
     console.log(msg);
     let thankRegexp = /thank\w*\s*/i;
@@ -78,7 +78,6 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
       if(msg.match(re)){
         let user = msg.match(re);
         let username = user.name;
-        console.log(user.list);
         let helped_userid = user[0].substring(2, user[0].length - 1);
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
@@ -92,7 +91,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     // actually we might also need to listen for the edit event and then update our database
     if(msg.match(addIntroRegexp)){
       let intro = msg.substr(9);
-      if(intro.length > 500){
+      if(intro.length > 5000){
         rtm.sendMessage("Your Intro is too long!");
       }
       else if(intro.length == 0){

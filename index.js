@@ -83,7 +83,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
         //need to 
-        database.incrementpoint(teamname, user.id); 
+        database.incrementpoint(teamname, helped_userid); 
         rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + helped_userid + ">!", message.channel);
           //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
       }
@@ -130,7 +130,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
           let username = msg.substr(9); 
           let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
           let teamname = team.name;
-          database.getPoint(teamname,username, (data) => {
+          database.getPoint(teamname, username, (data) => {
             //console.log(data); 
             rtm.sendMessage("Helpfullness points of user - " + username + " : \n" + data.point , message.channel);
             //May be we can think of better ways of displaying the points? instead of just numbers.

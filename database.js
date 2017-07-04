@@ -64,8 +64,8 @@ exports.incrementpoint = (teamName, userId) => {
       });
       // increment the user point in the database
       db.collection('slack_user_intros_and_points').update(
-        {'teamname': teamName, 'username': userName}, 
-        {$set: {'teamname': teamName, 'username': userName},
+        {'teamname': teamName, 'userId': userId}, 
+        {$set: {'teamname': teamName, 'userId': userId},
          $inc: {'point': 1}
         }, (err, intro) => {
         if (err) {

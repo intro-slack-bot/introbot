@@ -72,6 +72,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     if(msg.match(re)){
       let user = msg.match(re);
       let username = user.name;
+      console.log(user.list);
       let helped_userid = user[0].substring(2, user[0].length - 1);
       let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
       let teamname = team.name;

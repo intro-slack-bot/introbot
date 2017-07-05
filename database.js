@@ -79,3 +79,51 @@ exports.incrementpoint = (teamName, userId) => {
 
     });  
 }
+
+/*New collection to store 1 token per team. 
+ *The token should be of the admin who installs the app in the team.
+ *so that the token wont expire as long as the admin stays in the group.
+ *Collection: team_tokens
+    *teamname
+    *token
+*/
+exports.storeToken = (teamName, access_token) => {
+  let data = {
+    "teamname": teamName,
+
+    "token": access_token
+  }
+  
+  MongoClient.connect(process.env.MONGO_URL, (err, db) => {
+    db.collection('slack_user_tokens').updateOne({
+        "slack-team": teamName
+      }, data, {upsert:true, w: 1}, (err, result)=>{
+      
+      if(err != null){
+        console.log("Error happened :(", err);
+      }
+      
+      db.close();  
+    })
+  });
+}
+
+/* Get the token from database given the team domain
+ * team_id : {string} : Team domain name
+ * user_id : {string} : User Id to find
+ * callback : {function (err, string)} : Function to handle the token
+ */
+exports.getToken = (team_id, user_id, callback) => {
+  MongoClient.connect(process.env.MONGO_URL, (err, db) => {
+    db.collection('slack_user_tokens').findOne({
+      "team-id": team_id,
+      "user-id": user_id
+    }).then((data)=>{
+      if(!data){
+        callback(404, null);
+        return;
+      }
+      callback(null, data.token);
+    })
+  });  
+}

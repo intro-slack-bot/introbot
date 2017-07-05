@@ -80,16 +80,13 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     if(msg.match(thankRegexp)){
       let re = /<@\w*>/i; //to get @username string from the message - this will have the user-id , not user-name. 
       if(msg.match(re)){
-        let user = msg.match(re);
-        
-        /* user is not an object. its just the id string. 
-        let username = user.name;
-        let toBeThankedUserId = user[0].substring(2, user[0].length - 1);
-        */
+        let user = msg.match(re);// user is the id string - <@id> 
+        let toBeThankedUserId = user[0].substring(2, user[0].length - 1).toUpperCase();
+        console.log('tobethankeduser:' + toBeThankedUserId);
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
         //need to
-        console.log("Sender id: " + username);
+        // console.log("Sender id: " + username);
         database.incrementpoint(teamname, toBeThankedUserId); 
         rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
           //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);

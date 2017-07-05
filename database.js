@@ -12,18 +12,18 @@ var MongoClient = require('mongodb').MongoClient;
 
 //Initially, Add user name, id and teamname using rtmStartData
 exports.add_name_id = (teamName, userArray) => {
-    MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      for(let i = 0; i < userArray.length; i++){
+  for(let i = 0; i < userArray.length; i++){
         let userName = userArray[i].name;
         let userId = userArray[i].id;
+    MongoClient.connect(process.env.MONGO_URL, (err, db) => {
         db.collection('slack_user_intros_and_points').update({'teamname': teamName, 'username': userName, 'userId': userId }, {upsert: true}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
         }
         db.close();
       })
-      }
     });
+  }
 }
 
 //Get description of the user and his helpfulness point from database, given username.

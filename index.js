@@ -60,7 +60,7 @@ app.get('/auth', (req, res) => {
 
 app.listen(process.env.PORT||"8080"); 
          
-let channel;
+let channel; 
 
 // The client will emit an RTM.AUTHENTICATED event on successful connection, with the `rtm.start` payload
 rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {

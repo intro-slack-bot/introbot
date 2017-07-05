@@ -50,7 +50,7 @@ app.get('/auth', (req, res) => {
     let team_name = pBody.team_name; 
     
     //store team token 
-    
+    database.storeToken()
     //res.redirect(``); - need to give a redirect url
   }).catch(res.end);
 })
@@ -153,7 +153,12 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
           let teamname = team.name;
           database.getIntro(teamname,username, (data) => {
             //console.log(data); 
+            if(data.intro){
             rtm.sendMessage("Intro of user - " + username + " is: \n" + data.intro , message.channel);
+            }
+            else{
+              rtm.sendMessage("No Intro available for user - " + username + " Plis: \n" + data.intro , message.channel);
+            }
           });
     }
 

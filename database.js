@@ -43,7 +43,7 @@ exports.getPoint = (teamName, userName, callback) => {
 //insert/update an intro about a user to the database
 exports.addIntro = (teamName, userName, userId, intro) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      db.collection('slack_user_intros_and_points').update({'teamname': teamName, 'username': userName}, {'teamname': teamName, 'username': userName, 'userid': userId, 'intro': intro, 'point': 0}, {upsert: true}, (err, intro) => {
+      db.collection('slack_user_intros_and_points').update({'teamname': teamName, 'userId': userId}, {'teamname': teamName, 'username': userName, 'userId': userId, 'intro': intro, 'point': 0}, {upsert: true}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
         }

@@ -151,13 +151,13 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
           let username = msg.substr(9);  
           let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
           let teamname = team.name;
-          database.getIntro(teamname,username, (data) => {
-            //console.log(data); 
+          database.getIntro(teamname,username, (err, data) => {
+            console.log(data); 
+            if(err){
+              rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
+            }
             if(((data.intro).length)>0){
             rtm.sendMessage("Intro of user - " + username + " is: \n" + data.intro , message.channel);
-            }
-            else{
-              rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
             }
           });
     }

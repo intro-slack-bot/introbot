@@ -16,10 +16,16 @@ exports.getIntro = (teamName, userName, callback) => {
       db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {"intro" : 1}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
-          callback(null);
+          callback(err,null);
         }
         if (intro) {
-          callback(intro);
+          let userintro = intro.intro;
+          if(userintro.length>0){
+          callback(null,intro);
+          }
+          else{
+            
+          }
         }
         db.close();
       })

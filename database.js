@@ -59,20 +59,23 @@ exports.incrementpoint = (teamName, userId) => {
       // create new document if the user is not exist
       db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'userId': userId}, {'point': 1}, (err, point) => {
          if (!point) {
-           db.collection('slack_user_intros_and_points').insert({'teamname': teamName, 'userId': userId, 'intro': '', 'point': 0}); 
-         }                                                   
-      });
-      // increment the user point in the database
-      db.collection('slack_user_intros_and_points').update(
-        {'teamname': teamName, 'userId': userId}, 
-        {$set: {'teamname': teamName, 'userId': userId},
-         $inc: {'point': 1}
-        }, (err, intro) => {
-        if (err) {
-          console.log("Error happened :(", err);
-        }
+           db.collection('slack_user_intros_and_points').insert({'teamname': teamName, 'userId': userId, 'intro': '', 'point': 1}); 
+         }else {
+                       // increment the user point in the database
+            db.collection('slack_user_intros_and_points').update(
+              {'teamname': teamName, 'userId': userId}, 
+              {$set: {'teamname': teamName, 'userId': userId},
+               $inc: {'point': 1}
+              }, (err, intro) => {
+              if (err) {
+                console.log("Error happened :(", err);
+              }
 
+              
+            });
+         }
         db.close();
       });
+
     });  
 }

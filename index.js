@@ -1,11 +1,11 @@
 const express = require("express"); 
 const bodyParser = require('body-parser');
-//database relatedconsttions
+//database related functions
 const database = require("./database.js");
-//helperconsttions
+//helper functions for working with slack api methods
 const helpers = require("./helpers.js");
 
-//initialize bot interaction using constlient
+//initialize bot interaction using RTM client
 const RtmClient = require('@slack/client').RtmClient;
 // The memory data store is a collection of useful functions we can include in our RtmClient - getting team, userconste, etc 
 var MemoryDataStore = require('@slack/client').MemoryDataStore;
@@ -106,8 +106,8 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         //data of user 
         let user = rtm.dataStore.getUserById(message.user);
         let username = user.name;
-        rtm.sendMessage("Added Intro of " + username + " to database : " + intro, message.channel); //need to format this message attractively
-        //let userid = user.id; 
+        rtm.sendMessage("Added Intro of " + username + " to database : " + intro, message.channel); //need to format this message 
+        //let userid = user.id; id is in uppercase
         // Get the team's name
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;

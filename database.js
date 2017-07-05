@@ -18,7 +18,7 @@ exports.getIntro = (teamName, userName, callback) => {
           console.log("Error happened :(", err);
         }
         if (intro) {
-          callback(intro);
+          callback(null, intro);
         }
         db.close();
       })

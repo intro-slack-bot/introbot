@@ -148,16 +148,16 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     // when user say 'getIntro username', we get the introContent from our database for that username
     //Eg: getIntro pankaja 
     if(msg.match(getIntroRegexp)){
-          let username = msg.substr(9); 
+          let username = msg.substr(9);  
           let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
           let teamname = team.name;
           database.getIntro(teamname,username, (data) => {
-            //console.log(data); 
-            if(data.intro){
+            console.log(data); 
+            if(data.intro.length>0){
             rtm.sendMessage("Intro of user - " + username + " is: \n" + data.intro , message.channel);
             }
             else{
-              rtm.sendMessage("No Intro available for user - " + username + " Plis: \n" + data.intro , message.channel);
+              rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
             }
           });
     }

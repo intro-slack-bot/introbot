@@ -10,13 +10,14 @@ var MongoClient = require('mongodb').MongoClient;
 */
 // why how to get the user id field? or do we really need the user id field
 
-//Add user name, id and teamname using rtmStartData
-exports.addName_id = (teamName,user) => {
+//Initially, Add user name, id and teamname using rtmStartData
+exports.add_name_id = (teamName,userName,userId) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-      db.collection('slack_user_intros_and_points').findOne({'teamname': teamName}, (err, intro) => {
+      db.collection('slack_user_intros_and_points').update({'teamname': teamName, 'username': userName}, {'teamname': teamName, 'username': userName, 'userId': userId }, {upsert: true}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
         }
+        
         db.close();
       })
     });

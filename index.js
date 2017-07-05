@@ -152,8 +152,8 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
           let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
           let teamname = team.name;
           database.getIntro(teamname,username, (data) => {
-            console.log(data); 
-            if(data.intro.length>0){
+            //console.log(data); 
+            if(((data.intro).length)>0){
             rtm.sendMessage("Intro of user - " + username + " is: \n" + data.intro , message.channel);
             }
             else{

@@ -16,9 +16,10 @@ exports.getIntro = (teamName, userName, callback) => {
       db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {"intro" : 1}, (err, intro) => {
         if (err) {
           console.log("Error happened :(", err);
+          callback(null);
         }
         if (intro) {
-          callback(null, intro);
+          callback(intro);
         }
         db.close();
       })
@@ -71,7 +72,7 @@ exports.incrementpoint = (teamName, userId) => {
                 console.log("Error happened :(", err);
               }
 
-              
+            
             });
          }
         db.close();

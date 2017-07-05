@@ -87,9 +87,10 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function() {
 
 rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to write in ES5 style here? - I just copied from slack docs :P
  console.log("Sender:" + message.user);
-  
+  let messageSenderId = message.user;
+    let messageSenderName = rtm.dataStore.getUserById(messageSenderId);
   if (message.subtype === 'message_changed') {// do something when user edited a message
-    let msg = message.message.text.toLowerCase();
+    let msg = message.text.toLowerCase();
     console.log('someone edited the message!!!')
   }else if (!message.subtype){// if we don't add this condition, the program will run when we delete the message and it will report an error
     let msg = message.text.toLowerCase();
@@ -98,8 +99,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     let addIntroRegexp = /addIntro\w*\s*/i;
     let getIntroRegexp = /getIntro\w*\s*/i;
     let getPointRegexp = /getPoint\w*\s*/i;
-    let messageSenderId = message.user;
-    let messageSenderName = rtm.dataStore.getUserById(messageSenderId);
+    
     // when user say 'thanks @username' we increment this user's point
     if(msg.match(thankRegexp)){
       let re = /<@\w*>/i; //to get @username string from the message - this will have the user-id , not user-name. 

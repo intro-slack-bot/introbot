@@ -87,6 +87,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let teamname = team.name;
         //need to
         // console.log("Sender id: " + username);
+        let user = rtm.
         database.incrementpoint(teamname, toBeThankedUserId); 
         rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
           //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);

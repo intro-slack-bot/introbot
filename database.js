@@ -10,6 +10,18 @@ var MongoClient = require('mongodb').MongoClient;
 */
 // why how to get the user id field? or do we really need the user id field
 
+//Add user name, id and teamname using rtmStartData
+exports.addName_id = (teamName,user) => {
+    MongoClient.connect(process.env.MONGO_URL, (err, db) => {
+      db.collection('slack_user_intros_and_points').findOne({'teamname': teamName}, (err, intro) => {
+        if (err) {
+          console.log("Error happened :(", err);
+        }
+        db.close();
+      })
+    });
+}
+
 //Get description of the user and his helpfulness point from database, given username.
 exports.getIntro = (teamName, userName, callback) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
@@ -87,13 +99,15 @@ exports.incrementpoint = (teamName, userId) => {
     });  
 }
 
-/*New collection to store 1 token per team. 
+
+/*New collection to store token per team. 
  *It is better if the token is the admin who installs the app in the team.
  *so that the token wont expire as long as the admin stays in the group.
  *Collection name: team_tokens
     *teamname: {string} : Team name
     *token: {string} : access token
 */
+/*
 exports.storeToken = (teamName, access_token) => {
   let data = {
     "teamname": teamName,
@@ -118,6 +132,7 @@ exports.storeToken = (teamName, access_token) => {
  * teamname : {string} : Team name
  * callback : {function (err, string)} : Function to handle the token
  */
+/*
 exports.getToken = (teamName, callback) => {
   MongoClient.connect(process.env.MONGO_URL, (err, db) => {
     db.collection('team_tokens').findOne({
@@ -131,3 +146,4 @@ exports.getToken = (teamName, callback) => {
     })
   });  
 }
+*/

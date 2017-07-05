@@ -69,7 +69,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
     console.log('someone edited the message!!!')
   }else if (!message.subtype){// if we don't add this condition, the program will run when we delete the message and it will report an error
     let msg = message.text.toLowerCase();
-    console.log(msg);
+    console.log("Message: " + msg);
     let thankRegexp = /thank\w*\s*/i;
     let addIntroRegexp = /addIntro\w*\s*/i;
     let getIntroRegexp = /getIntro\w*\s*/i;
@@ -86,7 +86,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
         //need to
-        console.log(user.id);
+        console.log("Sender id: " + username);
         database.incrementpoint(teamname, toBeThankedUserId); 
         rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
           //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);

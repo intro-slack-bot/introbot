@@ -82,7 +82,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
       if(msg.match(re)){
         let user = msg.match(re);
         
-        /*
+        /* user is not an object. its just the id string. 
         let username = user.name;
         let toBeThankedUserId = user[0].substring(2, user[0].length - 1);
         */

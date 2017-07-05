@@ -21,10 +21,10 @@ exports.getIntro = (teamName, userName, callback) => {
         if (intro) {
           let userintro = intro.intro;
           if(userintro.length>0){
-          callback(null,intro);
+            callback(null,intro);
           }
           else{
-            
+            callback("Error!",null);
           }
         }
         db.close();
@@ -66,7 +66,7 @@ exports.incrementpoint = (teamName, userId) => {
       // create new document if the user is not exist
       db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'userId': userId}, {'point': 1}, (err, point) => {
          if (!point) {
-           db.collection('slack_user_intros_and_points').insert({'teamname': teamName, 'userId': userId, 'intro': '', 'point': 1}); 
+           db.collection('slack_user_intros_and_points').insert({'teamname': teamName, 'userId': userId, 'point': 1}); 
          }else {
                        // increment the user point in the database
             db.collection('slack_user_intros_and_points').update(

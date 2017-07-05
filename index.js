@@ -68,9 +68,11 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
     if (c.is_member && c.name ==='general') { channel = c.id }
   }
   console.log(rtmStartData);
-  console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}`);
+  let teamName = rtmStartData.team.name;
+  console.log(`Logged in as ${rtmStartData.self.name} of team ${teamName}`);
   //console.log(rtmStartData.channels);
-  let teamName = 
+  let users = rtmStartData.users;
+  d
 });
 
 // Wait for the client to connect

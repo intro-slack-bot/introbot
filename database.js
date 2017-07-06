@@ -8,23 +8,6 @@ var MongoClient = require('mongodb').MongoClient;
 * intro
 * point
 */
-// why how to get the user id field? or do we really need the user id field
-
-//Initially, Add user name, id and teamname using rtmStartData
-exports.add_name_id = (teamName, userArray) => {
-  for(let i = 0; i < userArray.length; i++){
-        let userName = userArray[i].name;
-        let userId = userArray[i].id;
-    MongoClient.connect(process.env.MONGO_URL, (err, db) => {
-        db.collection('slack_user_intros_and_points').update({'teamname': teamName, 'username': userName, 'userId': userId }, {upsert: true}, (err, intro) => {
-        if (err) {
-          console.log("Error happened :(", err);
-        }
-        db.close();
-      })
-    });
-  }
-}
 
 //Get description of the user and his helpfulness point from database, given username.
 exports.getIntro = (teamName, userName, callback) => {
@@ -111,7 +94,7 @@ exports.incrementpoint = (teamName, userId) => {
     *teamname: {string} : Team name
     *token: {string} : access token
 */
-/*
+
 exports.storeToken = (teamName, access_token) => {
   let data = {
     "teamname": teamName,
@@ -136,7 +119,7 @@ exports.storeToken = (teamName, access_token) => {
  * teamname : {string} : Team name
  * callback : {function (err, string)} : Function to handle the token
  */
-/*
+
 exports.getToken = (teamName, callback) => {
   MongoClient.connect(process.env.MONGO_URL, (err, db) => {
     db.collection('team_tokens').findOne({
@@ -150,4 +133,3 @@ exports.getToken = (teamName, callback) => {
     })
   });  
 }
-*/

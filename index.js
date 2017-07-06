@@ -35,13 +35,13 @@ app.get('/', (req, res) => {
 //OAuth2 flow or using slack api methods 
 app.get('/auth/grant', (req, res) => {
   // Prepare Data for Slack Auth
+  console.log('Req: ' + req);
   console.log('Code ' + req.query.code);
   let data = {
     client_id: process.env.SLACK_CLIENT_ID, 
     client_secret: process.env.SLACK_CLIENT_SECRET, 
     code: req.query.code 
   };
-  console.log(req.query.code);
   
   // POST the data to slack access endpoint
   helpers.slack('oauth.access', data)
@@ -54,7 +54,7 @@ app.get('/auth/grant', (req, res) => {
     let team_name = pBody.team_name; 
     
     //store team token 
-    database.storeToken()
+    database.storeToken(team_name, token);
     //res.redirect(``); - need to give a redirect url
   }).catch(res.end);
 })

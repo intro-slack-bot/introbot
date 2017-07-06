@@ -176,7 +176,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
           let teamname = team.name;
           database.getPoint(teamname, username, (data) => {
             console.log(data); 
-            rtm.sendMessage("Helpfullness points of user - " + username + " : \n" + data.point , message.channel);
+            rtm.sendMessage("Helpfulness score of " + username + " : \n" + data.point , message.channel);
             //May be we can think of better ways of displaying the points? instead of just numbers.
             //Also, feel free to change any of the sentences
           });

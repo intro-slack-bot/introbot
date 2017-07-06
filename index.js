@@ -39,7 +39,7 @@ app.get('/auth', (req, res) => {
   let data = {
     client_id: process.env.SLACK_CLIENT_ID, 
     client_secret: process.env.SLACK_CLIENT_SECRET, 
-    code: req.params.code 
+    code: req.query.code 
   };
   console.log(req.query.code);
   

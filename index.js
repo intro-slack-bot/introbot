@@ -55,7 +55,7 @@ app.get('/auth/grant', (req, res) => {
     
     //store team token 
     database.storeToken(team_name, token);
-    //res.redirect(``); - need to give a redirect url after building the site
+    res.redirect(`https://intro-slack-bot.github.io/introbot-landing/`); 
   }).catch(res.end);
 })
 

@@ -127,7 +127,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
           }
           else{
             let token = tokenobj.token;
-            console.log('Token: ' + token);
+            console.log('Token from database: ' + token);
             //get username using users.info
             let apidata = {
             'token' : token,
@@ -136,7 +136,8 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
             helpers.slack('users.info', apidata)
                .then((userobj) => {
                  //let user_name = userobj.user.name;
-                 console.log(userobj.name);  
+                 console.log('User Object from Slack api: \n' + userobj[0].ok);   
+                 
                }); 
           }
         }); 

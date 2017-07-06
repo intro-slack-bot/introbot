@@ -33,7 +33,7 @@ app.get('/', (req, res) => {
   res.end(`<a href="https://slack.com/oauth/authorize?scope=users:read,commands,bot&client_id=204082547206.207027688375"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>`)
 });
 
-/*
+
 //OAuth2 flow or using slack api methods 
 app.get('/auth/grant', (req, res) => {
   // Prepare Data for Slack Auth
@@ -63,7 +63,6 @@ app.get('/auth/grant', (req, res) => {
 
 app.listen(process.env.PORT||"8080"); 
      
-     */
 let channel; 
 
 // The client will emit an RTM.AUTHENTICATED event on successful connection, with the `rtm.start` payload
@@ -120,9 +119,11 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let teamname = team.name;
         
         //get token from database, team_tokens collection
+        /*
         let access_token = database.getToken(teamname, (token) => {
           return token;
         });
+        console.log(access_token);
         
         let apidata = {
           'token' : access_token,
@@ -132,10 +133,10 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let username;
         
         //get username using users.info
-        // helpers.slack('users.info', apidata)
-        // .then((userobj) => {
-        //   username = userobj.user.name;
-        // });
+        helpers.slack('users.info', apidata)
+         .then((userobj) => {
+           username = userobj.user.name;
+         });
         // console.log("Sender id: " + username);
         
         database.incrementpoint(teamname, toBeThankedUserId, username); 

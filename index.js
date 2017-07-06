@@ -121,29 +121,31 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         
         //get token from database, team_tokens collection
         
-        let token = database.getToken(teamname, (err, tokenobj) => {
+        database.getToken(teamname, (err, tokenobj) => {
           if(err){
             rtm.sendMessage('Not authorized. Please install app again <a href="https://goo.gl/PznqTB">here</a> ', message.channel);
           }
-          return tokenobj.token;
-          console.log('Token: ' + tokenobj.token);
-        });
-        
-        /*
-        let apidata = {
-          'token' : access_token,
-          'user' : toBeThankedUserId
-        };
-        */
+          else{
+            let token = tokenobj.token;
+            console.log('Token: ' + token);
+            //get username using users.info
+            let apidata = {
+            'token' : token,
+            'user' : toBeThankedUserId
+            };
+            helpers.slack('users.info', apidata)
+               .then((userobj) => {
+                 //let user_name = userobj.user.name;
+                 console.log(userobj.name);  
+               }); 
+          }
+        }); 
         
         let username;
         
         /*
-        //get username using users.info
-        helpers.slack('users.info', apidata)
-         .then((userobj) => {
-           username = userobj.user.name;
-         });
+        
+        
          */
         // console.log("Sender id: " + username);
         

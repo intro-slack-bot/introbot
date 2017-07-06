@@ -18,14 +18,11 @@ exports.getIntro = (teamName, userName, callback) => {
           callback(err,null);
         }
         if (intro) {
-          let userintro = intro.intro;
-          if(userintro.length>0){
             callback(null,intro);
           }
           else{
             callback("Error!",null);
           }
-        }
         db.close();
       })
     });

@@ -181,10 +181,10 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
           console.log("123");
           database.getIntro(teamname,username, (err, data) => {
             console.log(data); 
-            if(err){
+            if(err|| !data.intro){
               rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
             }
-            if((data.intro.length)>0){
+            if(data.intro){
               rtm.sendMessage("Intro of user - " + username + " is: \n" + data.intro , message.channel);
             }
           });

@@ -55,7 +55,7 @@ app.get('/auth/grant', (req, res) => {
     
     //store team token 
     database.storeToken(team_name, token);
-    res.redirect(`https://intro-slack-bot.github.io/introbot-landing/`); 
+    //res.redirect(`https://intro-slack-bot.github.io/introbot-landing/`); 
   }).catch(res.end);
 })
 
@@ -129,10 +129,10 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let username;
         
         //get username using users.info
-        helpers.slack('users.info', apidata)
-        .then((userobj) => {
-          username = userobj.user.name;
-        });
+        // helpers.slack('users.info', apidata)
+        // .then((userobj) => {
+        //   username = userobj.user.name;
+        // });
         // console.log("Sender id: " + username);
         
         database.incrementpoint(teamname, toBeThankedUserId, username); 

@@ -11,4 +11,6 @@ const slack = (api, data={}, method='POST') => {
       });
 }
 
+const getUser
+
 exports.slack = slack;

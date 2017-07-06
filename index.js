@@ -115,16 +115,23 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         console.log('tobethankeduser:' + toBeThankedUserId);
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
-        //get token from database
+        
+        //get token from database, team_tokens collection
         let access_token = database.getToken(teamname, (token) => {
           return token;
         });
-        //need to
-        // console.log("Sender id: " + username);
-        //let user = rtm.
-        /*
         
-        */
+        let apidata = {
+          'token' : access_token,
+          'user' : toBeThankedUserId
+        }
+        //get username using users.info
+        helpers.slack('users.info', apidata)
+        .then((userdata) => {
+          
+        });
+        // console.log("Sender id: " + username);
+        
         database.incrementpoint(teamname, toBeThankedUserId); 
         rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
           //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);

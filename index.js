@@ -117,18 +117,24 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         console.log('tobethankeduser:' + toBeThankedUserId);
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
+        console.log('Team: ' + teamname);
         
         //get token from database, team_tokens collection
         
-        let access_token = database.getToken(teamname, (token) => {
-          return token;
+        let token = database.getToken(teamname, (err, tokenobj) => {
+          if(err){
+            rtm.sendMessage('Not authorized. Please install app again <a href="https://goo.gl/PznqTB">here</a> ', message.channel);
+          }
+          return tokenobj.token;
+          console.log('Token: ' + tokenobj.token);
         });
-        console.log(access_token);
         
+        /*
         let apidata = {
           'token' : access_token,
           'user' : toBeThankedUserId
         };
+        */
         
         let username;
         

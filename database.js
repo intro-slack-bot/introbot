@@ -124,12 +124,12 @@ exports.getToken = (teamName, callback) => {
   MongoClient.connect(process.env.MONGO_URL, (err, db) => {
     db.collection('team_tokens').findOne({
       "teamname": teamName
-    }).then((data)=>{
+    }, {token: 1}).then((data)=>{
       if(!data){
         callback(404, null);
         return;
       }
-      callback(null, data.token);
+      callback(null, data);
     })
   });  
 }

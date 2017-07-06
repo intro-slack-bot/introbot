@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
 //OAuth2 flow or using slack api methods 
 app.get('/auth/grant', (req, res) => {
   // Prepare Data for Slack Auth
-  console.log('Code ' + req.query.code);
+  //console.log('Code ' + req.query.code);
   let data = {
     client_id: process.env.SLACK_CLIENT_ID, 
     client_secret: process.env.SLACK_CLIENT_SECRET, 
@@ -115,6 +115,10 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         console.log('tobethankeduser:' + toBeThankedUserId);
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
+        //get token from database
+        let access_token = database.getToken(teamname, (token) => {
+          console.log(token); 
+        })
         //need to
         // console.log("Sender id: " + username);
         //let user = rtm.

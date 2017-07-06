@@ -33,9 +33,9 @@ app.get('/', (req, res) => {
 });
 
 //OAuth2 flow or using slack api methods 
-app.get('/auth', (req, res) => {
+app.get('/auth/grant', (req, res) => {
   // Prepare Data for Slack Auth
-  console.log(req);
+  console.log('Code ' + req.query.code);
   let data = {
     client_id: process.env.SLACK_CLIENT_ID, 
     client_secret: process.env.SLACK_CLIENT_SECRET, 

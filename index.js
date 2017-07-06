@@ -136,7 +136,8 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
             helpers.slack('users.info', apidata)
                .then((userobj) => {
                  //let user_name = userobj.user.name;
-                 console.log('User Object from Slack api: \n' + userobj[0].ok);   
+                 console.log('User Object from Slack api: \n' + userobj);   
+                 console.log(JSON.parse(userobj));   
                  
                }); 
           }

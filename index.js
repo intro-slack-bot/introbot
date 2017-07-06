@@ -135,24 +135,15 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
             };
             helpers.slack('users.info', apidata)
                .then((userobj) => {
-                 //let user_name = userobj.user.name;
                  //console.log('User Object from Slack api: \n' + userobj);   
-              let user_json   
-              console.log((JSON.parse(userobj)).user);     
-                 
+                let user_json = (JSON.parse(userobj)).user;
+                //console.log(user_json);     
+                let toBeThankedUserName = user_json.name;
+                // console.log("Thanked username: " + toBeThankedUserName);
+                database.incrementpoint(teamname, toBeThankedUserId, toBeThankedUserName);  
                }); 
           }
         }); 
-        
-        let username;
-        
-        /*
-        
-        
-         */
-        // console.log("Sender id: " + username);
-        
-        database.incrementpoint(teamname, toBeThankedUserId, username); 
         rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
           //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
       }

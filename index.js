@@ -124,7 +124,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let apidata = {
           'token' : access_token,
           'user' : toBeThankedUserId
-        }
+        };
         
         let username;
         

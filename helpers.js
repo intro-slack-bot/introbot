@@ -9,8 +9,10 @@ const slack = (api, data={}, method='POST') => {
            'content-type': 'application/x-www-form-urlencoded' 
         }
       });
-}
+};
 
-const getUser
+const getUserName = (userName) => {
+  
+};
 
 exports.slack = slack;

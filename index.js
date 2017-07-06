@@ -117,8 +117,8 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let teamname = team.name;
         //get token from database
         let access_token = database.getToken(teamname, (token) => {
-          console.log(token); 
-        })
+          return token;
+        });
         //need to
         // console.log("Sender id: " + username);
         //let user = rtm.

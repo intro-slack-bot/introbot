@@ -119,7 +119,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         let teamname = team.name;
         
         //get token from database, team_tokens collection
-        /*
+        
         let access_token = database.getToken(teamname, (token) => {
           return token;
         });
@@ -132,11 +132,13 @@ rtm.on(RTM_EVENTS.MESSAGE, function handleRtmMessage(message) {//@why we need to
         
         let username;
         
+        /*
         //get username using users.info
         helpers.slack('users.info', apidata)
          .then((userobj) => {
            username = userobj.user.name;
          });
+         */
         // console.log("Sender id: " + username);
         
         database.incrementpoint(teamname, toBeThankedUserId, username); 

@@ -35,7 +35,6 @@ app.get('/', (req, res) => {
 //OAuth2 flow or using slack api methods 
 app.get('/auth/grant', (req, res) => {
   // Prepare Data for Slack Auth
-  console.log('Req: ' + req);
   console.log('Code ' + req.query.code);
   let data = {
     client_id: process.env.SLACK_CLIENT_ID, 
@@ -52,10 +51,11 @@ app.get('/auth/grant', (req, res) => {
     let user = pBody.user_id;
     let team_id = pBody.team_id;
     let team_name = pBody.team_name; 
+    //console.log('Token: ' + token);
     
     //store team token 
     database.storeToken(team_name, token);
-    //res.redirect(``); - need to give a redirect url
+    //res.redirect(``); - need to give a redirect url after building the site
   }).catch(res.end);
 })
 
@@ -71,8 +71,6 @@ rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
   //console.log(rtmStartData); 
   let teamName = rtmStartData.team.name;
   console.log(`Logged in as ${rtmStartData.self.name} of team ${teamName}`);
-  //console.log(rtmStartData.users);       
-  database.add_name_id(teamName, rtmStartData.users);
 });
 
 // Wait for the client to connect

@@ -153,26 +153,6 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
     // when user say 'addIntro introContent', we add the introContent to our database
     // actually we might also need to listen for the edit event and then update our database
     if(messageContent.match(addIntroRegexp)){
-      // let intro = messageContent.substr(9);
-      // if(intro.length > 5000){
-      //   rtm.sendMessage("Your Intro is too long!");
-      // }
-      // else if(intro.length == 0){
-      //   rtm.sendMessage("Intro is empty! Please tell us something about yourself.");
-      // }
-      // else{
-      //   //data of user 
-      //   let user = rtm.dataStore.getUserById(message.user);
-      //   let username = user.name;
-      //   rtm.sendMessage("Added Intro of " + username + " to database : " + intro, message.channel); //need to format this message 
-      //   //let userid = user.id; id is in uppercase
-      //   // Get the team's name
-      //   let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-      //   let teamname = team.name;
-      //   //let teamid = team.id;
-      //   //console.log(rtm.dataStore.getUserById(message.user));
-      //   database.addIntro(teamname, username, user.id, intro);
-      // }
       addIntro(message);
     }
     // when user say 'getIntro username', we get the introContent from our database for that username
@@ -216,13 +196,16 @@ let addIntro = (message) => {
     else if(intro.length === 0){
         rtm.sendMessage("Intro is empty! Please tell us something about yourself.");
     }else{
-        //data of user 
+        //data of user
+        let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
+        let teamname = team.name;
+        database.addIntro(teamname, messageSenderName, messageSenderId, intro);
         rtm.sendMessage("Intro of " + messageSenderName + " is updated to the database : " + intro, channel); //need to format this message 
         //let userid = user.id; id is in uppercase
         // Get the team's name
         //let teamid = team.id;
         //console.log(rtm.dataStore.getUserById(message.user));
-        database.addIntro(teamname, messageSenderName, messageSenderId, intro);
+        
       }
 
 }

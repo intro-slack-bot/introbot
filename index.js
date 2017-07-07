@@ -95,6 +95,8 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
 rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style here? - I just copied from slack docs :P
   console.log("Sender: " + message.user);
   let channel = message.channel;
+  let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
+  let teamname = team.name;
   if (message.subtype === 'message_changed') {// do something when user edited a message
     let editedMessage = message.message;
     console.log('someone edited the message!!!');
@@ -117,8 +119,6 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
 
         let toBeThankedUserId = user[0].substring(2, user[0].length - 1).toUpperCase();
         console.log('tobethankeduser:' + toBeThankedUserId);
-        let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-        let teamname = team.name;
         console.log('Team: ' + teamname);
         
         //get token from database, team_tokens collection
@@ -177,10 +177,8 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
     }
     // when user say 'getIntro username', we get the introContent from our database for that username
     //Eg: getIntro pankaja 
-    if(messageContent.match(getIntroRegexp)){
+    if(messageContent.match(getIntroRegexp)) {
           let username = messageContent.substr(9);  
-          let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-          let teamname = team.name;
           database.getIntro(teamname, username, (err, data) => {
             console.log(data);
             if(err || !data.intro){
@@ -196,8 +194,6 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
     //Eg: getPoints or getPoint pankaja
     if(messageContent.match(getPointRegexp)) { 
           let username = messageContent.substr(9); 
-          let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-          let teamname = team.name;
           database.getPoint(teamname, username, (data) => {
             console.log(data); 
             rtm.sendMessage("Helpfulness score of " + username + " : \n" + data.point , message.channel);
@@ -224,14 +220,16 @@ let addIntro = (message) => {
         rtm.sendMessage("Intro of " + messageSenderName + " is updated to the database : " + intro, channel); //need to format this message 
         //let userid = user.id; id is in uppercase
         // Get the team's name
-        let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-        let teamname = team.name;
         //let teamid = team.id;
         //console.log(rtm.dataStore.getUserById(message.user));
         database.addIntro(teamname, messageSenderName, messageSenderId, intro);
       }
 
 }
+
+let getPoint = (message) => {
+    
+};
      
 rtm.start();
 

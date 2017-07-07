@@ -181,10 +181,9 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
           let username = messageContent.substr(9);  
           let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
           let teamname = team.name;
-          console.log("123");
-          database.getIntro(teamname,username, (err, data) => {
-            console.log(data); 
-            if(err|| !data.intro){
+          database.getIntro(teamname, username, (err, data) => {
+            console.log(data);
+            if(err || !data.intro){
               rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
             }
             if(data.intro){
@@ -195,7 +194,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
 
     //get points for a username 
     //Eg: getPoints or getPoint pankaja
-    if(messageContent.match(getPointRegexp)){ 
+    if(messageContent.match(getPointRegexp)) { 
           let username = messageContent.substr(9); 
           let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
           let teamname = team.name;
@@ -218,7 +217,7 @@ let addIntro = (message) => {
     if(intro.length > 5000){
         rtm.sendMessage("Your Intro is too long!");
     }
-    else if(intro.length == 0){
+    else if(intro.length === 0){
         rtm.sendMessage("Intro is empty! Please tell us something about yourself.");
     }else{
         //data of user 

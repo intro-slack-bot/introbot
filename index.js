@@ -93,25 +93,25 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
 //handling message events
 
 rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style here? - I just copied from slack docs :P
-  console.log("Sender:" + message.user);
-  let messageSenderId = message.user;
-  let messageSenderName = rtm.dataStore.getUserById(messageSenderId);
+  console.log("Sender: " + message.user);
   if (message.subtype === 'message_changed') {// do something when user edited a message
-    let msg = message.text.toLowerCase();
+    let messageContent = message.text.toLowerCase();
     console.log('someone edited the message!!!')
   }else if (!message.subtype){// if we don't add this condition, the program will run when we delete the message and it will report an error
-    let msg = message.text.toLowerCase();
-    console.log("Message: " + msg);
+    let messageContent = message.text.toLowerCase();
+    let messageSenderId = message.user;
+    let messageSenderName = rtm.dataStore.getUserById(messageSenderId);
+    console.log("Message: " + messageContent);
     let thankRegexp = /thank\w*\s*/i;
     let addIntroRegexp = /addIntro\w*\s*/i;
     let getIntroRegexp = /getIntro\w*\s*/i;
     let getPointRegexp = /getPoint\w*\s*/i;
     
     // when user say 'thanks @username' we increment this user's point
-    if(msg.match(thankRegexp)){
+    if(messageContent.match(thankRegexp)){
       let re = /<@\w*>/i; //to get @username string from the message - this will have the user-id , not user-name. 
-      if(msg.match(re)){
-        let user = msg.match(re);// user is the id string - <@id>
+      if(messageContent.match(re)){
+        let user = messageContent.match(re);// user is the id string - <@id>
 
         let toBeThankedUserId = user[0].substring(2, user[0].length - 1).toUpperCase();
         console.log('tobethankeduser:' + toBeThankedUserId);
@@ -150,8 +150,8 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
     }
     // when user say 'addIntro introContent', we add the introContent to our database
     // actually we might also need to listen for the edit event and then update our database
-    if(msg.match(addIntroRegexp)){
-      let intro = msg.substr(9);
+    if(messageContent.match(addIntroRegexp)){
+      let intro = messageContent.substr(9);
       if(intro.length > 5000){
         rtm.sendMessage("Your Intro is too long!");
       }
@@ -174,8 +174,8 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
     }
     // when user say 'getIntro username', we get the introContent from our database for that username
     //Eg: getIntro pankaja 
-    if(msg.match(getIntroRegexp)){
-          let username = msg.substr(9);  
+    if(messageContent.match(getIntroRegexp)){
+          let username = messageContent.substr(9);  
           let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
           let teamname = team.name;
           console.log("123");
@@ -192,8 +192,8 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
 
     //get points for a username 
     //Eg: getPoints or getPoint pankaja
-    if(msg.match(getPointRegexp)){ 
-          let username = msg.substr(9); 
+    if(messageContent.match(getPointRegexp)){ 
+          let username = messageContent.substr(9); 
           let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
           let teamname = team.name;
           database.getPoint(teamname, username, (data) => {
@@ -206,7 +206,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
   }
   });
 
-let addIntro = (message, messageSenderName) => {
+let addIntro = (message) => {
 
 }
      

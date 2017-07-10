@@ -146,7 +146,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
                }); 
           }
         }); 
-        /*
+        /* For buttons we need another custom integration - interactive messages
         let repliedMessage = {
     "text": "Would you like to play a game?",
     "attachments": [
@@ -207,6 +207,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
               rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
             }
             if(data.intro){
+              /*
               let reply = {
     "attachments": [
         {
@@ -219,7 +220,8 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
         }
     ]
 }
-              rtm.sendMessage(reply, message.channel);
+*/
+              rtm.sendMessage("Intro of user: " + username + " is: \n" + data.intro, message.channel);
             }
           });
     }

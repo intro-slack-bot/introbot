@@ -245,7 +245,7 @@ let addIntro = (message) => {
     let messageSenderId = message.user;
     let messageSenderName = rtm.dataStore.getUserById(messageSenderId).name;
     console.log(messageSenderName);
-    let intro = messageContent.substr(9);
+    let intro = (message.text).substr(9); //to preserve the cases in the string, otherwise everything will be in lowercase.
     if(intro.length > 5000){
         rtm.sendMessage("Your Intro is too long!");
     }

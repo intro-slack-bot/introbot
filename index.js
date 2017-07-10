@@ -146,6 +146,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
                }); 
           }
         }); 
+        /*
         let repliedMessage = {
     "text": "Would you like to play a game?",
     "attachments": [
@@ -185,6 +186,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
         }
     ]
 }
+*/
         //rtm.sendMessage(repliedMessage, message.channel);
          rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
           //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
@@ -205,7 +207,19 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
               rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
             }
             if(data.intro){
-              rtm.sendMessage("Intro of user - " + username + " is: \n" + data.intro , message.channel);
+              let reply = {
+    "attachments": [
+        {
+            "fallback": "Intro of user: " + username + " is: \n" + data.intro,
+            "pretext": "Intro of user: " + username,
+            "title": username,
+            //"title_link": user link if possible,
+            "text": "Intro - " + data.intro,
+            "color": "#7CD197"
+        }
+    ]
+}
+              rtm.sendMessage(reply, message.channel);
             }
           });
     }

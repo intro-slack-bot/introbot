@@ -28,8 +28,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //For distribution 
 app.get('/', (req, res) => {
+  let query = req.body.text;
+  
   // Show a cute slack button
   // need to write a static page similar to https://chingurunner.herokuapp.com/
+  if(req.body.token != process.env.TOKEN && !req.body.team_domain){
+    res.end('3rd party api requests not allowed... creepy!');
+    return;
+  }
+  
   res.end(`<a href="https://slack.com/oauth/authorize?scope=users:read,commands,bot&client_id=204082547206.207027688375"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>`)
 });
 
@@ -200,30 +207,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
     // when user say 'getIntro username', we get the introContent from our database for that username
     //Eg: getIntro pankaja 
     if(messageContent.match(getIntroRegexp)) {
-          let username = messageContent.substr(9);  
-          database.getIntro(teamname, username, (err, data) => {
-            console.log(data);
-            if(err || !data.intro){
-              rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
-            }
-            if(data.intro){
-              /*
-              let reply = {
-    "attachments": [
-        {
-            "fallback": "Intro of user: " + username + " is: \n" + data.intro,
-            "pretext": "Intro of user: " + username,
-            "title": username,
-            //"title_link": user link if possible,
-            "text": "Intro - " + data.intro,
-            "color": "#7CD197"
-        }
-    ]
-}
-*/
-              rtm.sendMessage("Intro of user: " + username + " is: \n" + data.intro, message.channel);
-            }
-          });
+          getIntro(messageContent, teamname);
     }
 
     //get points for a username 
@@ -264,6 +248,33 @@ let addIntro = (message) => {
         
       }
 
+}
+
+let getIntro = (user, teamname) => {
+  let username = user.substr(9);  
+          database.getIntro(teamname, username, (err, data) => {
+            console.log(data);
+            if(err || !data.intro){
+              rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
+            }
+            if(data.intro){
+              /*
+              let reply = {
+    "attachments": [
+        {
+            "fallback": "Intro of user: " + username + " is: \n" + data.intro,
+            "pretext": "Intro of user: " + username,
+            "title": username,
+            //"title_link": user link if possible,
+            "text": "Intro - " + data.intro,
+            "color": "#7CD197"
+        }
+    ]
+}
+*/
+              rtm.sendMessage("Intro of user: " + username + " is: \n" + data.intro, message.channel);
+            }
+          });
 }
 
 let getPoint = (message) => {

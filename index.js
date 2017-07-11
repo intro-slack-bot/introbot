@@ -25,6 +25,18 @@ const app = express();
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//for slash commands
+app.post('/', (req, res) => {  
+  let query = req.body.text;
+  console.log('Post Query: ' + query);
+  if(req.body.token != process.env.TOKEN && !req.body.team_domain){
+    res.end('3rd party api requests not allowed... creepy!');
+    return;
+  }
+  if(query.startsWith("getintro")){
+    res.end("Command: " + query);
+  }
+});
 
 //For distribution 
 app.get('/', (req, res) => {
@@ -37,7 +49,6 @@ app.get('/', (req, res) => {
   
    res.end(`<a href="https://slack.com/oauth/authorize?scope=users:read,commands,bot&client_id=204082547206.207027688375"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>`)
 });
-
 
 //OAuth2 flow or using slack api methods 
 app.get('/auth/grant', (req, res) => {
@@ -64,7 +75,7 @@ app.get('/auth/grant', (req, res) => {
     database.storeToken(team_name, token);
     res.redirect(`https://intro-slack-bot.github.io/introbot-landing/`); 
   }).catch(res.end);
-})
+});
 
 app.listen(process.env.PORT||"8080"); 
      
@@ -211,13 +222,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
     //get points for a username 
     //Eg: getPoints or getPoint pankaja
     if(messageContent.match(getPointRegexp)) { 
-          let username = messageContent.substr(9); 
-          database.getPoint(teamname, username, (data) => {
-            console.log(data); 
-            rtm.sendMessage("Helpfulness score of " + username + " : \n" + data.point , message.channel);
-            //May be we can think of better ways of displaying the points? instead of just numbers.
-            //Also, feel free to change any of the sentences
-          });
+          
     }    
   }
   });
@@ -277,7 +282,13 @@ let getIntro = (message, teamname) => {
 }
 
 let getPoint = (message) => {
-    
+    let username = messageContent.substr(9); 
+          database.getPoint(teamname, username, (data) => {
+            console.log(data); 
+            rtm.sendMessage("Helpfulness score of " + username + " : \n" + data.point , message.channel);
+            //May be we can think of better ways of displaying the points? instead of just numbers.
+            //Also, feel free to change any of the sentences
+          });
 };
      
 rtm.start();

@@ -222,8 +222,8 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
     //get points for a username 
     //Eg: getPoints or getPoint pankaja
     if(messageContent.match(getPointRegexp)) { 
-          
-    }    
+          getPoint(message, teamname);
+    }     
   }
   });
 
@@ -281,7 +281,8 @@ let getIntro = (message, teamname) => {
           });
 }
 
-let getPoint = (message) => {
+let getPoint = (message, teamname) => {
+    let messageContent = message.text.toLowerCase();
     let username = messageContent.substr(9); 
           database.getPoint(teamname, username, (data) => {
             console.log(data); 
@@ -291,5 +292,5 @@ let getPoint = (message) => {
           });
 };
      
-rtm.start();
+rtm.start(); 
 

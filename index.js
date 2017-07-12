@@ -58,11 +58,21 @@ app.post('/', (req, res) => {
   
   else if(query.startsWith('getpoint')){
     let username = query.substr(9);
-    database.getPoint(teamname, username, (data) => {
+    database.getPoint(teamname, username, (err, data) => {
+            if(err || !data.intro){
+              res.end("No Intro available for user - " + username + " Please add one using addintro.");
+            }
             console.log(data); 
+      else
             res.json({
               text: "Helpfulness score of " + username + ":", 
-            }+ " : \n" + data.point );
+              attachments: [
+                {
+                  color: "#4D6DC3",
+                  text: data.point 
+                }
+              ]
+            });
           });
   }
 });
@@ -170,9 +180,9 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
         
         database.getToken(teamname, (err, tokenobj) => {
           if(err){
-            rtm.sendMessage('Not authorized. Please install app again <a href="https://goo.gl/PznqTB">here</a> ', message.channel);
+            rtm.sendMessage('Not authorized. Please install app <https://goo.gl/PznqTB|here> ', message.channel);
           }
-          else{
+          else{  
             let token = tokenobj.token;
             console.log('Token from database: ' + token);
             //get username using users.info
@@ -232,7 +242,7 @@ let addIntro = (message) => {
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
         database.addIntro(teamname, messageSenderName, messageSenderId, intro);
-        rtm.sendMessage("Intro of " + messageSenderName + " is updated to the database : " + intro, channel); //need to format this message 
+        //rtm.sendMessage("Intro of " + messageSenderName + " is updated to the database : " + intro, channel); //need to format this message 
         //let userid = user.id; id is in uppercase
         // Get the team's name
         //let teamid = team.id;

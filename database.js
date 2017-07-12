@@ -34,9 +34,10 @@ exports.getPoint = (teamName, userName, callback) => {
       db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'username': userName}, {'point': 1}, (err, point) => {
         if (err) { 
           console.log("Error happened :(", err);
+          callback(err,null);
         }
         if (point) {
-          callback(point);
+          callback(null,point);
         }
         db.close();
       });

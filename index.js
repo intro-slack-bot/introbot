@@ -58,7 +58,12 @@ app.post('/', (req, res) => {
   
   else if(query.startsWith('getpoint')){
     let username = query.substr(9);
-    
+    database.getPoint(teamname, username, (data) => {
+            console.log(data); 
+            res.json({
+              text: "Helpfulness score of " + username + ":", 
+            }+ " : \n" + data.point );
+          });
   }
 });
 

@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/', (req, res) => {  
   let username = req.body.text;
   let teamname = req.body.team_domain;
-  console.log('username: ' + req.body.text);
+  console.log('command: ' + req.body.text);
   console.log('teamname: ' + teamname);
   
   if(req.body.token != process.env.TOKEN && !req.body.team_domain){

@@ -27,14 +27,32 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //for slash commands
 app.post('/', (req, res) => {  
-  let query = req.body.text;
-  console.log('Req text: ' + req.body.text);
+  let username = req.body.text;
+  let teamname = req.body.team_domain;
+  console.log('username: ' + req.body.text);
   if(req.body.token != process.env.TOKEN && !req.body.team_domain){
     res.end('3rd party api requests not allowed... creepy!');
     return;
   }
-  //if(query == )
-    res.end("Command is: " + query); 
+  
+  database.getIntro(teamname, username, (err, data) => {
+            console.log(data);
+            if(err || !data.intro){
+              res.end("No Intro available for user - " + username + " Please add one using addintro.");
+            }
+            if(data.intro){
+              res.json({
+                attachments: [
+                  {
+                    color: "#7353BA",
+                    text: data.intro
+                  }
+                ]
+              });
+
+              res.end();
+            }
+  });
 });
 
 //For distribution 

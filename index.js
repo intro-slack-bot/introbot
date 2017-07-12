@@ -30,11 +30,13 @@ app.post('/', (req, res) => {
   let username = req.body.text;
   let teamname = req.body.team_domain;
   console.log('username: ' + req.body.text);
+  console.log('teamname: ' + teamname);
+  
   if(req.body.token != process.env.TOKEN && !req.body.team_domain){
     res.end('3rd party api requests not allowed... creepy!');
     return;
   }
-  
+
   database.getIntro(teamname, username, (err, data) => {
             console.log(data);
             if(err || !data.intro){
@@ -42,6 +44,7 @@ app.post('/', (req, res) => {
             }
             if(data.intro){
               res.json({
+                text: "About " + username + ":",
                 attachments: [
                   {
                     color: "#7353BA",

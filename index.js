@@ -27,18 +27,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //for slash commands
 app.post('/', (req, res) => {  
-  let username = req.body.text;
+  let query = req.body.text;
   let teamname = req.body.team_domain;
-  console.log('command: ' + req.body.text);
-  console.log('teamname: ' + teamname);
   
   if(req.body.token != process.env.TOKEN && !req.body.team_domain){
     res.end('3rd party api requests not allowed... creepy!');
     return;
   }
-
-  database.getIntro(teamname, username, (err, data) => {
-            console.log(data);
+  
+  if(query.startsWith('getintro')){
+    let username = query.substr(9);
+    database.getIntro(teamname, username, (err, data) => {
             if(err || !data.intro){
               res.end("No Intro available for user - " + username + " Please add one using addintro.");
             }
@@ -52,10 +51,15 @@ app.post('/', (req, res) => {
                   }
                 ]
               });
-
               res.end();
             }
   });
+  }
+  
+  else if(query.startsWith('getpoint')){
+    let username = query.substr(9);
+    
+  }
 });
 
 //For distribution 

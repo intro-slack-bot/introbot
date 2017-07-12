@@ -47,7 +47,7 @@ app.post('/', (req, res) => {
                 text: "About " + username + ":",
                 attachments: [
                   {
-                    color: "#7353BA",
+                    color: "#4D6DC3",
                     text: data.intro
                   }
                 ]

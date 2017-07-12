@@ -62,7 +62,7 @@ exports.incrementpoint = (teamName, userId, userName) => {
     MongoClient.connect(process.env.MONGO_URL, (err, db) => {
       // create new document if the user is not exist
       db.collection('slack_user_intros_and_points').findOne({'teamname': teamName, 'userId': userId}, {'point': 1}, (err, point) => {
-         if (!point) {
+         if (err || !point) {
            db.collection('slack_user_intros_and_points').insert({'teamname': teamName, 'userId': userId, 'username': userName, 'point': 1}); 
          }else {
                        // increment the user point in the database

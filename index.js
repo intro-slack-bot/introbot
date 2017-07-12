@@ -132,7 +132,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
   console.log("Sender: " + message.user);
   let channel = message.channel;
   let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
-  let teamname = team.name;
+  let teamname = team.domain;
   if (message.subtype === 'message_changed') {// do something when user edited a message
     let editedMessage = message.message;
     console.log('someone edited the message!!!');

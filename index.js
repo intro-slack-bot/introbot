@@ -129,7 +129,7 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, () => {
 //handling message events
 
 rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style here? - I just copied from slack docs :P
-  console.log("Sender: " + message.user);
+  //console.log("Sender: " + message.user);
   let channel = message.channel;
   let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
   let teamname = team.domain;
@@ -182,50 +182,10 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
                }); 
           }
         }); 
-        /* For buttons we need another custom integration - interactive messages
-        let repliedMessage = {
-    "text": "Would you like to play a game?",
-    "attachments": [
-        {
-            "text": "Choose a game to play",
-            "fallback": "You are unable to choose a game",
-            "callback_id": "wopr_game",
-            "color": "#3AA3E3",
-            "attachment_type": "default",
-            "actions": [
-                {
-                    "name": "game",
-                    "text": "Chess",
-                    "type": "button",
-                    "value": "chess"
-                },
-                {
-                    "name": "game",
-                    "text": "Falken's Maze",
-                    "type": "button",
-                    "value": "maze"
-                },
-                {
-                    "name": "game",
-                    "text": "Thermonuclear War",
-                    "style": "danger",
-                    "type": "button",
-                    "value": "war",
-                    "confirm": {
-                        "title": "Are you sure?",
-                        "text": "Wouldn't you prefer a good game of chess?",
-                        "ok_text": "Yes",
-                        "dismiss_text": "No"
-                    }
-                }
-            ]
-        }
-    ]
-}
-*/
+  
         //rtm.sendMessage(repliedMessage, message.channel);
-         rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
-          //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
+        //rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
+        //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
       }
     }
     // when user say 'addIntro introContent', we add the introContent to our database
@@ -267,10 +227,8 @@ let addIntro = (message) => {
         //let userid = user.id; id is in uppercase
         // Get the team's name
         //let teamid = team.id;
-        //console.log(rtm.dataStore.getUserById(message.user));
-        
+        //console.log(rtm.dataStore.getUserById(message.user)); 
       }
-
 }
 
 let getIntro = (message, teamname) => {

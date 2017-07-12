@@ -28,11 +28,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //for slash commands
 app.post('/', (req, res) => {  
   let query = req.body.text;
-  console.log('Req: ' + req.body);
+  //console.log('Req text: ' + req.body.text);
   if(req.body.token != process.env.TOKEN && !req.body.team_domain){
     res.end('3rd party api requests not allowed... creepy!');
     return;
   }
+  if(query)
     res.end("Command is: " + query); 
 });
 

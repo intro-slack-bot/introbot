@@ -33,7 +33,7 @@ app.post('/', (req, res) => {
     res.end('3rd party api requests not allowed... creepy!');
     return;
   }
-  if(query)
+  //if(query == )
     res.end("Command is: " + query); 
 });
 

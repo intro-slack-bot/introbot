@@ -46,7 +46,7 @@ app.post('/', (req, res) => {
                 text: "About " + username + ":",
                 attachments: [
                   {
-                    color: "#4D6DC3",
+                    color: "#55FF84",
                     text: data.intro
                   }
                 ]
@@ -68,7 +68,7 @@ app.post('/', (req, res) => {
               text: "Helpfulness score of " + username + ":", 
               attachments: [
                 {
-                  color: "#4D6DC3",
+                  color: "#1D2733",
                   text: data.point 
                 }
               ]

@@ -251,7 +251,7 @@ let addIntro = (message) => {
       }
 }
 
-/*
+
 let getIntro = (message, teamname) => {
   let messageContent = message.text.toLowerCase();
   let username = messageContent.substr(9);  
@@ -283,7 +283,7 @@ let getPoint = (message, teamname) => {
             }
           });
 }; 
-*/
+
      
 rtm.start(); 
 

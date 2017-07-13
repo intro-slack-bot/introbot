@@ -251,6 +251,7 @@ let addIntro = (message) => {
       }
 }
 
+/*
 let getIntro = (message, teamname) => {
   let messageContent = message.text.toLowerCase();
   let username = messageContent.substr(9);  
@@ -260,24 +261,12 @@ let getIntro = (message, teamname) => {
               rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
             }
             if(data.intro){
-              /*
-              let reply = {
-    "attachments": [
-        {
-            "fallback": "Intro of user: " + username + " is: \n" + data.intro,
-            "pretext": "Intro of user: " + username,
-            "title": username,
-            //"title_link": user link if possible,
-            "text": "Intro - " + data.intro,
-            "color": "#7CD197"
-        }
-    ]
-}
-*/
+              
               rtm.sendMessage("Intro of user: " + username + " is: \n" + data.intro, message.channel);
             }
           });
 }
+
 
 let getPoint = (message, teamname) => {
     let messageContent = message.text.toLowerCase();
@@ -293,7 +282,8 @@ let getPoint = (message, teamname) => {
             //Also, feel free to change any of the sentences
             }
           });
-};    
+}; 
+*/
      
 rtm.start(); 
 

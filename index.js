@@ -243,11 +243,11 @@ let addIntro = (message) => {
         let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
         let teamname = team.name;
         database.addIntro(teamname, messageSenderName, messageSenderId, intro);
-        //rtm.sendMessage("Intro of " + messageSenderName + " is updated to the database : " + intro, channel); //need to format this message 
-        //let userid = user.id; id is in uppercase
+        rtm.sendMessage("Intro of " + messageSenderName + " is updated to the database", channel); //need to format this message 
+        // let userid = user.id; // id is in uppercase
         // Get the team's name
-        //let teamid = team.id;
-        //console.log(rtm.dataStore.getUserById(message.user)); 
+        let teamid = team.id;
+        console.log(rtm.dataStore.getUserById(message.user)); 
       }
 }
 

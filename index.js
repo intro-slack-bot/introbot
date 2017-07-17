@@ -220,7 +220,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
     // when user say 'getIntro username', we get the introContent from our database for that username
     //Eg: getIntro pankaja 
     if(messageContent.match(getIntroRegexp)) {
-          getIntro(message, teamname);
+          // getIntro(message, teamname);
     }
 
     //get points for a username 
@@ -265,7 +265,7 @@ let getIntro = (message, teamname) => {
               rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
             }
             if(data.intro){              
-              rtm.sendMessage("Intro of user: " + username + " is: \n" + data.intro, message.channel);
+              rtm.sendMessage("Intro of " + username + " is: \n" + data.intro, message.channel);
             }
           });
 }

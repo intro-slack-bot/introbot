@@ -153,20 +153,24 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
   let channel = message.channel;
   let team = rtm.dataStore.getTeamById(rtm.activeTeamId);
   let teamname = team.domain;
+  
+  let thankRegexp = /thank\w*\s*/i;
+  let addIntroRegexp = /addIntro\w*\s*/i;
+  let getIntroRegexp = /getIntro\w*\s*/i;
+  let getPointRegexp = /getPoint\w*\s*/i;
+    
   if (message.subtype === 'message_changed') {// do something when user edited a message
     let editedMessage = message.message;
     console.log('someone edited the message!!!');
-    addIntro(editedMessage);
+    if (editedMessage.text.match(addIntroRegexp)) {
+      addIntro(editedMessage);  
+    }
   }else if (!message.subtype){// if we don't add this condition, the program will run when we delete the message and it will report an error
     let messageContent = message.text.toLowerCase();
     let messageSenderId = message.user;
     let messageSenderName = rtm.dataStore.getUserById(messageSenderId);
     console.log("Message: " + messageContent);
-    let thankRegexp = /thank\w*\s*/i;
-    let addIntroRegexp = /addIntro\w*\s*/i;
-    let getIntroRegexp = /getIntro\w*\s*/i;
-    let getPointRegexp = /getPoint\w*\s*/i;
-    
+
     // when user say 'thanks @username' we increment this user's point
     if(messageContent.match(thankRegexp)){
       let re = /<@\w*>/i; //to get @username string from the message - this will have the user-id , not user-name. 

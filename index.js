@@ -168,6 +168,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
   }else if (!message.subtype){// if we don't add this condition, the program will run when we delete the message and it will report an error
     let messageContent = message.text.toLowerCase();
     let messageSenderId = message.user;
+    console.log('messageSenderId' + messageSenderId);
     let messageSenderName = rtm.dataStore.getUserById(messageSenderId);
     console.log("Message: " + messageContent);
 
@@ -180,8 +181,8 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
         let toBeThankedUserId = user[0].substring(2, user[0].length - 1).toUpperCase();
         console.log('tobethankeduser:' + toBeThankedUserId);
         console.log('Team: ' + teamname);
-        
-        //get token from database, team_tokens collection
+        if (!toBeThankedUserId === messageSenderId) {
+                  //get token from database, team_tokens collection
         
         database.getToken(teamname, (err, tokenobj) => {
           if(err){
@@ -208,8 +209,12 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
         }); 
   
         //rtm.sendMessage(repliedMessage, message.channel);
-        //rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
-        //rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);
+        rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
+        rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);  
+        }else {
+          
+        }
+
       }
     }
     // when user say 'addIntro introContent', we add the introContent to our database

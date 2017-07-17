@@ -264,8 +264,7 @@ let getIntro = (message, teamname) => {
             if(err || !data.intro){
               rtm.sendMessage("No Intro available for user - " + username + " Please add one using addintro." , message.channel);
             }
-            if(data.intro){
-              
+            if(data.intro){              
               rtm.sendMessage("Intro of user: " + username + " is: \n" + data.intro, message.channel);
             }
           });
@@ -276,7 +275,7 @@ let getPoint = (message, teamname) => {
     let messageContent = message.text.toLowerCase();
     let username = messageContent.substr(9); 
           database.getPoint(teamname, username, (err, data) => {
-            if(err || !data.point){
+            if(err || data.point === undefined){
               rtm.sendMessage("No Points available for user - " + username, message.channel);
             }
             if(data){

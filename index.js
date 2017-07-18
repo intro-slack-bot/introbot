@@ -181,8 +181,12 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
         let toBeThankedUserId = user[0].substring(2, user[0].length - 1).toUpperCase();
         console.log('tobethankeduser:' + toBeThankedUserId);
         console.log('Team: ' + teamname);
-        if (!toBeThankedUserId === messageSenderId) {
-                  //get token from database, team_tokens collection
+        if (toBeThankedUserId === messageSenderId) {
+          
+          rtm.sendMessage("Come on don't thank yourself!", message.channel);
+ 
+        }else {
+                            //get token from database, team_tokens collection
         
         database.getToken(teamname, (err, tokenobj) => {
           if(err){
@@ -210,9 +214,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
   
         //rtm.sendMessage(repliedMessage, message.channel);
         rtm.sendMessage("Hello, <@"+ message.user + ">! You just thanked <@" + toBeThankedUserId + ">!", message.channel);
-        rtm.sendMessage("Some one thanked you <@" + message.user + ">! Your helpfulnes score just increased! ", message.channel);  
-        }else {
-          rtm.sendMessage("Come on don't thank yourself!", message.channel);
+        rtm.sendMessage("Some one thanked you <@" + toBeThankedUserId + ">! Your helpfulnes score just increased! ", message.channel); 
         }
 
       }

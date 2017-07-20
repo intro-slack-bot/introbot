@@ -14,7 +14,7 @@ const CLIENT_EVENTS = require('@slack/client').CLIENT_EVENTS;
 
 const bot_token = process.env.SLACK_BOT_TOKEN || '';
 
-var rtm = new RtmClient(bot_token, {
+var rtm = new RtmClient(bot_token, { 
   // Sets the level of logging we require
   logLevel: 'error',
   // Initialise a data store for our client, this will load additional helper functions for the storing and retrieval of data

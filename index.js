@@ -80,17 +80,10 @@ app.post('/', (req, res) => {
           });
     }else {
       //write helpful guide here!!!
+      // feel free to change the message
       res.json({
-        text: "1. `addintro` <introContent> add people's introduction to the database
-2. `thank` <people's id> thank people and increment people's helpfulness score
-3. `/introbot getintro` get people's introduction
-4. `/introbot getpoint` get people's helpfulness score
-5. `getpoint`<username> to get people's point from the database",
+        text: "Hi! I am introbot, here is what I can do for you:\n1. `addintro` <introContent> will add your introduction to the database\n2. `thank` <people's id> thank people and increment people\'s helpfulness score\n3. `/introbot getintro` get people\'s introduction\n4. `/introbot getpoint` get people\'s helpfulness score\n5. `getpoint`<username> to get people's point from the database",
         attachments: [
-          {
-            text: "I am very helpful",
-            color:"red"
-          }
         ]
       })
     }

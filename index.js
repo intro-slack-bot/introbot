@@ -79,8 +79,7 @@ app.post('/', (req, res) => {
       }
           });
     }else {
-      //write helpful guide here!!!
-      // feel free to change the message
+      //help guide 
       res.json({
         text: "Hi! I am introbot, here is what I can do for you:",
         attachments: [

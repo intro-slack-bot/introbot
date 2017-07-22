@@ -62,8 +62,9 @@ app.post('/', (req, res) => {
   else if(query.startsWith('getpoint')){
     let username = query.substr(9);
     database.getPoint(teamname, username, (err, data) => {
+      console.log('Point: ' + data.point);
             if(err || !data.point){ 
-              res.end("No Points available for user - " + username );
+              res.json({text:"No Points available for user - " + username });
             }
              
       else {
@@ -298,6 +299,7 @@ let getPoint = (message, teamname) => {
     let messageContent = message.text.toLowerCase();
     let username = messageContent.substr(9); 
           database.getPoint(teamname, username, (err, data) => {
+            console.log('Point: ' + data.point);
             if(err || data.point === undefined){
               rtm.sendMessage("No Points available for user - " + username, message.channel);
             }

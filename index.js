@@ -34,18 +34,9 @@ app.post('/', (req, res) => {
     res.end('3rd party api requests not allowed... creepy!');
     return;
   }
+  console.log(query);
   
-  if (query.startsWith('')) {
-    res.json({
-      text: "helpful guide!!!",
-      attachments: [
-        {
-          text: "I am very helpful!!!",
-          color:"red"
-        }
-      ]
-    })
-  }
+
   
   if(query.startsWith('getintro')){
     let username = query.substr(9);
@@ -87,7 +78,22 @@ app.post('/', (req, res) => {
             });
       }
           });
-  }
+    }else {
+      //write helpful guide here!!!
+      res.json({
+        text: "1. `addintro` <introContent> add people's introduction to the database
+2. `thank` <people's id> thank people and increment people's helpfulness score
+3. `/introbot getintro` get people's introduction
+4. `/introbot getpoint` get people's helpfulness score
+5. `getpoint`<username> to get people's point from the database",
+        attachments: [
+          {
+            text: "I am very helpful",
+            color:"red"
+          }
+        ]
+      })
+    }
 });
 
 //For distribution 

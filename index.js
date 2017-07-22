@@ -35,6 +35,18 @@ app.post('/', (req, res) => {
     return;
   }
   
+  if (query.startsWith('')) {
+    res.json({
+      text: "helpful guide!!!",
+      attachments: [
+        {
+          text: "I am very helpful!!!",
+          color:"red"
+        }
+      ]
+    })
+  }
+  
   if(query.startsWith('getintro')){
     let username = query.substr(9);
     database.getIntro(teamname, username, (err, data) => {
@@ -88,8 +100,7 @@ app.get('/', (req, res) => {
     return;
   }
   */
-  
-   res.end(`<a href="https://slack.com/oauth/authorize?scope=users:read,commands,bot&client_id=204082547206.207027688375"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>`)
+  res.redirect("https://intro-slack-bot.github.io/introbot-landing/");
 });
 
 //OAuth2 flow or using slack api methods 

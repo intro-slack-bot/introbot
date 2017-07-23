@@ -39,6 +39,9 @@ exports.getPoint = (teamName, userName, callback) => {
         if (point) {
           callback(null,point);
         }
+        else{
+          callback("Error!", null);
+        }
         db.close();
       });
     });  

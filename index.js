@@ -62,12 +62,11 @@ app.post('/', (req, res) => {
   else if(query.startsWith('getpoint')){
     let username = query.substr(9);
     database.getPoint(teamname, username, (err, data) => {
-      console.log('Point: ' + data.point);
             if(err || !data.point){ 
               res.json({text:"No Points available for user - " + username });
             }
              
-      else {
+      if(data.point){
             res.json({
               text: "Helpfulness score of " + username + ":", 
               attachments: [
@@ -298,18 +297,21 @@ let getIntro = (message, teamname) => {
 let getPoint = (message, teamname) => {
     let messageContent = message.text.toLowerCase();
     let username = messageContent.substr(9); 
+  if(username.length == 0) {
+    rtm.sendMessage("Please enter username after getpoint. " , message.channel);
+  }
+  else{
           database.getPoint(teamname, username, (err, data) => {
-            console.log('Point: ' + data.point);
-            if(err || data.point === undefined){
+            if(err || !data.point){
               rtm.sendMessage("No Points available for user - " + username, message.channel);
             }
-            if(data){
-            console.log(data); 
+            else if(data.point){
             rtm.sendMessage("Helpfulness score of " + username + " : \n" + data.point , message.channel);
             //May be we can think of better ways of displaying the points? instead of just numbers.
             //Also, feel free to change any of the sentences
             }
           });
+  }
 }; 
 
      

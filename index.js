@@ -40,6 +40,10 @@ app.post('/', (req, res) => {
   
   if(query.startsWith('getintro')){
     let username = query.substr(9);
+    if(username.length == 0){
+      res.json({text:"Please enter username after getintro"});
+    }
+    else{
     database.getIntro(teamname, username, (err, data) => {
             if(err || !data.intro){
               res.end("No Intro available for user - " + username + " Please add one using addintro.");
@@ -57,10 +61,15 @@ app.post('/', (req, res) => {
               res.end();
             }
   });
+    }
   }
   
   else if(query.startsWith('getpoint')){
     let username = query.substr(9);
+    if(username.length == 0){
+      res.json({text:"Please enter username after getpoint"});
+    }
+    else{
     database.getPoint(teamname, username, (err, data) => {
             if(err || !data.point){ 
               res.json({text:"No Points available for user - " + username });
@@ -78,6 +87,7 @@ app.post('/', (req, res) => {
             });
       }
           });
+      }
     }else {
       //help guide 
       res.json({
@@ -244,6 +254,7 @@ rtm.on(RTM_EVENTS.MESSAGE, (message) => {//@why we need to write in ES5 style he
     //Eg: getIntro pankaja 
     if(messageContent.match(getIntroRegexp)) {
           // getIntro(message, teamname);
+      rtm.sendMessage("Please use slash command for getintro. Type `/introbot` for help. " , message.channel); 
     }
 
     //get points for a username 
@@ -282,6 +293,10 @@ let addIntro = (message) => {
 let getIntro = (message, teamname) => {
   let messageContent = message.text.toLowerCase();
   let username = messageContent.substr(9);  
+  if(username.length == 0){
+      rtm.sendMessage("Please enter username after getpoint. " , message.channel); 
+    } 
+  else{
           database.getIntro(teamname, username, (err, data) => {
             console.log(data);
             if(err || !data.intro){
@@ -291,6 +306,7 @@ let getIntro = (message, teamname) => {
               rtm.sendMessage("Intro of " + username + " is: \n" + data.intro, message.channel);
             }
           });
+  }
 }
 
 
